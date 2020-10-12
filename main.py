@@ -101,7 +101,7 @@ def estado_inicial():
     t=0
     neutron = mod.neutron(vector(-15,0,0), vector(1,0,0), 0.5)
 
-neutron = mod.neutron(vector(-15,0,0), vector(1,0,0), 0.5)
+neutron = mod.neutron(vector(-15,0,0), vector(1,0,0), 5)
 
 t = 0
 dt = 0.1
