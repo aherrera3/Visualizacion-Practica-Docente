@@ -99,7 +99,7 @@ while (not stop):
 
 def estado_inicial():
     t=0
-    neutron = mod.neutron(vector(-15,0,0), vector(1,0,0), 0.5)
+    neutron = mod.proton(vector(-15,0,0), vector(1,0,0), 0.5)
 
 neutron = mod.neutron(vector(-15,0,0), vector(1,0,0), 5)
 
@@ -119,6 +119,22 @@ while (not desintegracion):
     if t >= t_desintegracion: # cuando se desintegra
         neutron.eliminar()
         desintegracion = True
+
+particulas_generados=[mod.electron(neutron.posicion,vector(np.random.random()*2-1,np.random.random()*2-1,np.random.random()*2-1)),mod.antineutrino_electronico(neutron.posicion,vector(np.random.random()*2-1,np.random.random()*2-1,np.random.random()*2-1))]
+
+
+
+#luego de la desintegracion
+proton=mod.proton(neutron.posicion,neutron.velocidad,5)
+while  True:
+    rate(20)
+    proton.evolucion_temporal(dt)
+    for part in particulas_generados:
+        part[0].pos+=part[0].velocidad*dt
+        part[1].pos+=part[0].velocidad*dt
+    t+=dt
+    if t>=20:
+        break
 """
 # choque aleatorio
 nballs = np.random.randint(2,5) #numero de partículas resultantes del choque
