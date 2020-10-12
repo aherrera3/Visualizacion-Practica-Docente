@@ -57,13 +57,13 @@ pos_choque = -1 - electron.radius   # pos de choque como prueba
 #antes del choque
 colision = False
 while (not colision):
-	rate(20) #fps
-	electron.pos.x += dt * vel_electron   # se modifica la posicion del electron
-	electron_nombre.pos = vector(electron.pos.x, electron.pos.y, electron.pos.z)  # para que la etiqueta siga a donde se mueva el electron
-	muon.pos.x -= dt * vel_muon
-	muon_nombre.pos = vector(muon.pos.x, muon.pos.y, muon.pos.z)
-	
-	if electron.pos.x >= pos_choque: # chocan en pos_choque 
+    rate(20) #fps
+    electron.pos.x += dt * vel_electron   # se modifica la posicion del electron
+    electron_nombre.pos = vector(electron.pos.x, electron.pos.y, electron.pos.z)  # para que la etiqueta siga a donde se mueva el electron
+    muon.pos.x -= dt * vel_muon
+    muon_nombre.pos = vector(muon.pos.x, muon.pos.y, muon.pos.z)
+    
+    if electron.pos.x >= pos_choque: # chocan en pos_choque 
         electron.visible = False
         muon.visible = False
         colision = True
