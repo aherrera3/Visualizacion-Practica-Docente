@@ -68,3 +68,10 @@ class neutron:
 		self.resorte12.pos=vector(self.resorte12.pos.x+(self.velocidad.x*dt),self.resorte12.pos.y+(self.velocidad.y*dt),self.resorte12.pos.z+(self.velocidad.z*dt))
 		self.resorte13.pos=vector(self.resorte13.pos.x+(self.velocidad.x*dt),self.resorte13.pos.y+(self.velocidad.y*dt),self.resorte13.pos.z+(self.velocidad.z*dt))
 		self.resorte23.pos=vector(self.resorte23.pos.x+(self.velocidad.x*dt),self.resorte23.pos.y+(self.velocidad.y*dt),self.resorte23.pos.z+(self.velocidad.z*dt))
+	def eliminar(self):
+		self.up1.visible=False
+		self.up2.visible=False
+		self.down1.visible=False
+		self.resorte12.visible=False
+		self.resorte13.visible=False
+		self.resorte23.visible=False
