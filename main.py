@@ -115,7 +115,7 @@ while (not desintegracion):
     rate(20) #fps
     neutron.evolucion_temporal(dt)
     
-    t = t + dt
+    t = t + dt 
     if t >= t_desintegracion: # cuando se desintegra
         neutron.eliminar()
         desintegracion = True
