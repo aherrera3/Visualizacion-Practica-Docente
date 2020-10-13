@@ -84,7 +84,13 @@ class proton:
 		self.resorte12.visible=False
 		self.resorte13.visible=False
 		self.resorte23.visible=False
-
+	def crear(self):
+		self.up1.visible=True
+		self.up2.visible=True
+		self.down1.visible=True
+		self.resorte12.visible=True
+		self.resorte13.visible=True
+		self.resorte23.visible=True
 class neutron:
 	"""docstring for ClassName"""
 	def __init__(self, posicion,velocidad,lado):
@@ -123,3 +129,10 @@ class neutron:
 		self.resorte12.visible=False
 		self.resorte13.visible=False
 		self.resorte23.visible=False
+	def crear(self):
+		self.up1.visible=True
+		self.down2.visible=True
+		self.down1.visible=True
+		self.resorte12.visible=True
+		self.resorte13.visible=True
+		self.resorte23.visible=True
