@@ -1,7 +1,6 @@
 from vpython import*
 
-#make_trail hace que la partícula tenga una trayectoria visible
-
+#make_trail hace que la partícula tenga una trayectoria visiblea
 
 def electron(posicion,velocidad):
 	color=vector(0.1,1,0.7)
@@ -69,15 +68,15 @@ class proton:
 		self.resorte23=helix(pos=self.down1.pos, axis=vector(0,0,self.lado), radius=radio_string,color=color_string)
 	def evolucion_temporal(self,dt):
 		#movimiento de las particulas
-		self.up1.pos=vector(self.up1.pos.x+(self.velocidad.x*dt),self.up1.pos.y+(self.velocidad.y*dt),self.up1.pos.z+(self.velocidad.z*dt))
-		self.up2.pos=vector(self.up2.pos.x+(self.velocidad.x*dt),self.up2.pos.y+(self.velocidad.y*dt),self.up2.pos.z+(self.velocidad.z*dt))
-		self.down1.pos=vector(self.down1.pos.x+(self.velocidad.x*dt),self.down1.pos.y+(self.velocidad.y*dt),self.down1.pos.z+(self.velocidad.z*dt))
+		self.up1.pos=vector(self.up1.pos + self.velocidad*dt)
+		self.up2.pos=vector(self.up2.pos + self.velocidad*dt)
+		self.down1.pos=vector(self.down1.pos+self.velocidad*dt)
 		#movimiento de los resortes
-		self.resorte12.pos=vector(self.resorte12.pos.x+(self.velocidad.x*dt),self.resorte12.pos.y+(self.velocidad.y*dt),self.resorte12.pos.z+(self.velocidad.z*dt))
-		self.resorte13.pos=vector(self.resorte13.pos.x+(self.velocidad.x*dt),self.resorte13.pos.y+(self.velocidad.y*dt),self.resorte13.pos.z+(self.velocidad.z*dt))
-		self.resorte23.pos=vector(self.resorte23.pos.x+(self.velocidad.x*dt),self.resorte23.pos.y+(self.velocidad.y*dt),self.resorte23.pos.z+(self.velocidad.z*dt))
+		self.resorte12.pos=vector(self.resorte12.pos +self.velocidad*dt)
+		self.resorte13.pos=vector(self.resorte13.pos +self.velocidad*dt)
+		self.resorte23.pos=vector(self.resorte23.pos + self.velocidad*dt)
 		#movimiento de la particula en general
-		self.posicion=vector(self.posicion.x+self.velocidad.x*dt,self.posicion.y  +  self.velocidad.y*dt,self.posicion.z+self.velocidad.z*dt)
+		self.posicion=vector(self.posicion+self.velocidad*dt)
 	def eliminar(self):
 		self.up1.visible=False
 		self.up2.visible=False
@@ -108,15 +107,15 @@ class neutron:
 		self.resorte23=helix(pos=self.down1.pos, axis=vector(0,0,self.lado), radius=radio_string,color=color_string)
 	def evolucion_temporal(self,dt):
 		#movimiento de las particulas
-		self.up1.pos=vector(self.up1.pos.x+(self.velocidad.x*dt),self.up1.pos.y+(self.velocidad.y*dt),self.up1.pos.z+(self.velocidad.z*dt))
-		self.down2.pos=vector(self.down2.pos.x+(self.velocidad.x*dt),self.down2.pos.y+(self.velocidad.y*dt),self.down2.pos.z+(self.velocidad.z*dt))
-		self.down1.pos=vector(self.down1.pos.x+(self.velocidad.x*dt),self.down1.pos.y+(self.velocidad.y*dt),self.down1.pos.z+(self.velocidad.z*dt))
+		self.up1.pos=vector(self.up1.pos+self.velocidad*dt)
+		self.down2.pos=vector(self.down2.pos+self.velocidad*dt)
+		self.down1.pos=vector(self.down1.pos+self.velocidad*dt)
 		#movimiento de los resortes
-		self.resorte12.pos=vector(self.resorte12.pos.x+(self.velocidad.x*dt),self.resorte12.pos.y+(self.velocidad.y*dt),self.resorte12.pos.z+(self.velocidad.z*dt))
-		self.resorte13.pos=vector(self.resorte13.pos.x+(self.velocidad.x*dt),self.resorte13.pos.y+(self.velocidad.y*dt),self.resorte13.pos.z+(self.velocidad.z*dt))
-		self.resorte23.pos=vector(self.resorte23.pos.x+(self.velocidad.x*dt),self.resorte23.pos.y+(self.velocidad.y*dt),self.resorte23.pos.z+(self.velocidad.z*dt))
+		self.resorte12.pos=vector(self.resorte12.pos + self.velocidad*dt)
+		self.resorte13.pos=vector(self.resorte13.pos + self.velocidad*dt)
+		self.resorte23.pos=vector(self.resorte23.pos + self.velocidad*dt)
 		#movimiento de la particula en general
-		self.posicion=vector(self.posicion.x+self.velocidad.x*dt,self.posicion.y  +  self.velocidad.y*dt,self.posicion.z+self.velocidad.z*dt)
+		self.posicion=vector(self.posicion + self.velocidad*dt)
 	def eliminar(self):
 		self.up1.visible=False
 		self.down2.visible=False
