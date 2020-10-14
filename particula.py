@@ -91,6 +91,17 @@ class proton:
 		self.resorte12.visible=True
 		self.resorte13.visible=True
 		self.resorte23.visible=True
+	def mover(self, posicion):
+		self.posicion=posicion
+		self.up1.pos=vector(posicion.x,posicion.y+(self.apotema**2+(self.lado/2)**2)**0.5,posicion.z)
+		self.up1.clear_trail()
+		self.up2.pos=vector(posicion.x,posicion.y-self.apotema,posicion.z+(self.lado/2))
+		self.up2.clear_trail()
+		self.down1.pos=vector(posicion.x,posicion.y-self.apotema,posicion.z-(self.lado/2))
+		self.down1.clear_trail()
+		self.resorte12.pos=self.up1.pos
+		self.resorte13.pos=self.up2.pos
+		self.resorte23.pos=self.down1.pos
 class neutron:
 	"""docstring for ClassName"""
 	def __init__(self, posicion,velocidad,lado):
@@ -136,3 +147,14 @@ class neutron:
 		self.resorte12.visible=True
 		self.resorte13.visible=True
 		self.resorte23.visible=True
+	def mover(self, posicion):
+		self.posicion=posicion
+		self.up1.pos=vector(posicion.x,posicion.y+(self.apotema**2+(self.lado/2)**2)**0.5,posicion.z)
+		self.up1.clear_trail()
+		self.down2.pos=vector(posicion.x,posicion.y-self.apotema,posicion.z+(self.lado/2))
+		self.down2.clear_trail()
+		self.down1.pos=vector(posicion.x,posicion.y-self.apotema,posicion.z-(self.lado/2))
+		self.down1.clear_trail()
+		self.resorte12.pos=self.up1.pos
+		self.resorte13.pos=self.down2.pos
+		self.resorte23.pos=self.down1.pos
