@@ -57,8 +57,8 @@ class proton:
 
 		#creacion de las particulas que comonen en neutron con sus respectivos nombres
 		self.up1,self.name_up1=up(vector(posicion.x,posicion.y+(self.apotema**2+(lado/2)**2)**0.5,posicion.z),self.velocidad)
-		self.up2,self.name2=up(vector(posicion.x,posicion.y-self.apotema,posicion.z+(lado/2)),self.velocidad)
-		self.down1,self.name3=down(vector(posicion.x,posicion.y-self.apotema,posicion.z-(lado/2)),self.velocidad)
+		self.up2,self.name_up2=up(vector(posicion.x,posicion.y-self.apotema,posicion.z+(lado/2)),self.velocidad)
+		self.down1,self.name_down1=down(vector(posicion.x,posicion.y-self.apotema,posicion.z-(lado/2)),self.velocidad)
 		#propiedades de los resortes
 		radio_string=0.4
 		color_string=color.white
@@ -77,13 +77,20 @@ class proton:
 		self.resorte23.pos=vector(self.resorte23.pos + self.velocidad*dt)
 		#movimiento de la particula en general
 		self.posicion=vector(self.posicion+self.velocidad*dt)
-	def eliminar(self):
+	def eliminar(self,eliminar_trayectoria):
 		self.up1.visible=False
 		self.up2.visible=False
 		self.down1.visible=False
 		self.resorte12.visible=False
 		self.resorte13.visible=False
 		self.resorte23.visible=False
+		if eliminar_trayectoria:
+			self.up1.clear_trail()
+			self.down1.clear_trail()
+			self.up2.clear_trail()
+			self.name_up1.visible=False
+			self.name_down1.visible=False
+			self.name_up2.visible=False
 	def crear(self):
 		self.up1.visible=True
 		self.up2.visible=True
@@ -113,8 +120,8 @@ class neutron:
 
 		#creacion de las particulas que comonen en neutron con sus respectivos nombres
 		self.up1,self.name_up1=up(vector(posicion.x,posicion.y+(self.apotema**2+(lado/2)**2)**0.5,posicion.z),self.velocidad)
-		self.down2,self.name2=down(vector(posicion.x,posicion.y-self.apotema,posicion.z+(lado/2)),self.velocidad)
-		self.down1,self.name3=down(vector(posicion.x,posicion.y-self.apotema,posicion.z-(lado/2)),self.velocidad)
+		self.down2,self.name_down2=down(vector(posicion.x,posicion.y-self.apotema,posicion.z+(lado/2)),self.velocidad)
+		self.down1,self.name_down1=down(vector(posicion.x,posicion.y-self.apotema,posicion.z-(lado/2)),self.velocidad)
 		#propiedades de los resortes
 		radio_string=0.4
 		color_string=color.white
@@ -133,13 +140,20 @@ class neutron:
 		self.resorte23.pos=vector(self.resorte23.pos + self.velocidad*dt)
 		#movimiento de la particula en general
 		self.posicion=vector(self.posicion + self.velocidad*dt)
-	def eliminar(self):
+	def eliminar(self,eliminar_trayectoria=False):
 		self.up1.visible=False
 		self.down2.visible=False
 		self.down1.visible=False
 		self.resorte12.visible=False
 		self.resorte13.visible=False
 		self.resorte23.visible=False
+		if eliminar_trayectoria:
+			self.up1.clear_trail()
+			self.down1.clear_trail()
+			self.down2.clear_trail()
+			self.name_down1.visible=False
+			self.name_up1.visible=False
+			self.name_down2.visible=False
 	def crear(self):
 		self.up1.visible=True
 		self.down2.visible=True
