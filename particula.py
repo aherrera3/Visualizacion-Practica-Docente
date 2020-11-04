@@ -172,3 +172,4 @@ class neutron:
 		self.resorte12.pos=self.up1.pos
 		self.resorte13.pos=self.down2.pos
 		self.resorte23.pos=self.down1.pos
+
