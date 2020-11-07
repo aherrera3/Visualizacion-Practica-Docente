@@ -52,8 +52,8 @@ def choque(foton):
     vx=v*np.sin(theta)*np.cos(phi)
     vy=v*np.sin(theta)*np.sin(theta)
     vz=v*np.cos(theta)
-    wave_lenghtf=round(380+(200*(1-np.cos(theta))),0)
-    return vector(vx,xy,vz), wave_lenghtf
+    wave_lenghtf=round(380+(199*(1-np.cos(theta))),0)
+    return vector(vx,vy,vz), wave_lenghtf
 
 print(conversion['450'])
 #foton=helix(pos=vector(0,0,0), axis=vector(5,0,0), radius=0.5,color=vector(0,0,0))
@@ -69,26 +69,72 @@ dt=0.1
 class photon:
 
     def __init__ (self, velocidad, posicion,longitud_onda):
-        self.elipse=ellipsoid(pos=posicion,axis=velocidad, length=6, height=2, width=2,color=vector(*conversion[str(longitud_onda)]),opacity=(0.5),velocidad=velocidad)
+        self.elipse=ellipsoid(pos=posicion,axis=velocidad, length=6, height=2, width=2,color=vector(*conversion[str(longitud_onda)]),opacity=(0.5),make_trail=True,velocidad=velocidad)
         self.velocidad=velocidad
+        self.posicion=posicion
+        self.longitud_onda=longitud_onda
         self.posicion_resorte=self.elipse.pos - (2.5*self.velocidad/(mag(self.velocidad)))
         self.axis_resorte=(5*self.velocidad/mag(self.velocidad))
         self.resorte=helix(pos=self.posicion_resorte, axis=self.axis_resorte, radius=0.5,color=vector(0,0,0))
     def evolucion_temporal(self,dt):
         self.elipse.pos=self.elipse.pos+ self.velocidad*dt
         self.resorte.pos = self.resorte.pos + self.velocidad*dt
+        self.posicion=self.posicion+self.velocidad*dt
+    def cambiar_velocidad(self,velocidad_nueva):
+        self.velocidad=velocidad_nueva
+        self.posicion_resorte=self.elipse.pos - (2.5*velocidad_nueva/(mag(velocidad_nueva)))
+        self.axis_resorte=(5*velocidad_nueva/mag(velocidad_nueva ))
+        self.resorte.axis=self.axis_resorte
+        self.elipse.axis=velocidad_nueva
+        #self.resorte.pos=self.posicion_resorte
+    def cambiar_longitud_onda(self,l_nueva):
+        self.elipse.color=vector(*conversion[str(int(l_nueva))])
 
-prueba=photon(vector(2,0,0), vector(0,0,0), 700)
-prueba2=photon(vector(0,2,0), vector(0,0,0), 400)
-prueba3=photon(vector(0,0,2), vector(0,0,0), 500)
+
 t=0
 
+fotones=[photon(vector(1,0,0), vector(0,0,0), 380)]
+n=0
+u=True
 while  True:
-    rate(30)
-    prueba.evolucion_temporal(dt)
-    prueba2.evolucion_temporal(dt)
-    prueba3.evolucion_temporal(dt)
+    rate(20)
+
     t+=dt
-    if t >10:
+    
+    for i in range(len(fotones)):
+        if round(fotones[i].posicion.x,0)==10 and u:
+            velocidad_nueva, l_nueva =choque(fotones[i])
+            fotones[i].cambiar_velocidad(velocidad_nueva)
+            fotones[i].cambiar_longitud_onda(l_nueva)
+            fotones[i].evolucion_temporal(dt)
+            u=False
+            #fotones.append(photon(vector(1,0,0), vector(0,0,0), 380))
+            n+=1
+        else:
+            fotones[i].evolucion_temporal(dt)
+        if mag(fotones[i].posicion) >=10.0:
+            fotones[i].velocidad=vector(0,0,0)
+            fotones.pop(i)
+            #fotones.append(photon(vector(1,0,0), vector(0,0,0), 380))
+    if n>=100:
         break
-        
+"""
+while  True:
+    rate(20)
+
+    t+=dt
+    
+    for i in range(len(fotones)):
+        if round(fotones[i].posicion.x,0)==10:
+            velocidad_nueva, l_nueva =choque(fotones[i])
+            fotones[i].cambiar_velocidad(velocidad_nueva)
+            fotones[i].cambiar_longitud_onda(l_nueva)
+            fotones[i].evolucion_temporal(dt)
+            #fotones.append(photon(vector(1,0,0), vector(0,0,0), 380))
+        else:
+            fotones[i].evolucion_temporal(dt)
+        if mag(fotones[i].posicion) >=10.0:
+            fotones[i].velocidad=vector(0,0,0)
+            fotones.pop(i)
+"""
+
