@@ -2,9 +2,6 @@
 from abc import ABC, abstractmethod
 import vpython as vp
 
-vp.scene.background = vp.color.black
-vp.scene.width = 1000 
-vp.scene.height = 600
 
 class Particula(ABC):
     
@@ -58,15 +55,18 @@ class Neutron(ParticulaCompuesta):
     def mover(self):
         print("neutron: ", self.lado, self.posicion)
 
-
 class Electron(ParticulaFundamental):
+    
+    #def __init__(posicion, velocidad, color, masa, radio, nombre):
+     #    super().__init__(posicion, velocidad, color, masa, radio, nombre)
     
     def mover(self):
         print("electron: ", self.etiqueta)
         
     def evolucion_temporal(self, dt):
         self.posicion = vp.vector(self.posicion + self.velocidad*dt)      # actualiza la posicion
-     
+        self.esfera.pos=self.posicion
+        
 class AntineutrinoElectronico(ParticulaFundamental): 
     
     def mover():
@@ -74,5 +74,6 @@ class AntineutrinoElectronico(ParticulaFundamental):
     
     def evolucion_temporal(self, dt):
         self.posicion = vp.vector(self.posicion + self.velocidad*dt)
+        self.esfera.pos=self.posicion
          
         
