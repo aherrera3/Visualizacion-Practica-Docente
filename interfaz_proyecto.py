@@ -35,11 +35,6 @@ resetButton = vp.button(text="Reset", pos=vp.scene.title_anchor, bind=Reset)
     
 
 ##############
-# en carpeta ESCENARIOS
-##############
-
-
-##############
 
 
 def Iniciar_aplicacion(m):
@@ -49,28 +44,22 @@ def Iniciar_aplicacion(m):
         # corre programa: 
         t = 0
         dt = 0.1
-
-        e1 = mod.Electron(vp.vector(-15,0,0), vp.vector(1,0,0), vp.vector(0.1,1,0.7), 0.0005, 1, "electron") 
-
-        # antineutrino
-        an1 = mod.AntineutrinoElectronico(vp.vector(5,0,0), vp.vector(1,0,0), vp.vector(0.8,0.5,0.3), 0.00001, 0.5, "antineutrino")  
-  
+        
+        e1,an1=esc.Escenario1_creacion()
+        
         while t<10:
             vp.rate(20)
-            if(running):
-                # evolucion del sistema  
-                e1.evolucion_temporal(dt)
-                an1.evolucion_temporal(dt)    
-        #while t<10:
-         #   vp.rate(20)
-          #  ejecutando = running
-           # esc.Escenario1(ejecutando, dt)
-            #if(running):  
-                #esc.Escenario1(dt)
-                #e1.evolucion_temporal(dt)
-                #an1.evolucion_temporal(dt)    
+            ejecutando = running
+            
+            if(running):  
+                esc.Escenario1_avance(ejecutando,e1,an1,dt)  
                 t+=dt
+                
+    #elif(evento=="escenario_2"):
+                 
+                
+                
     
     
-vp.menu(choices=["Elige un experimento", "escenario_1", "esc_2", "esc_3", "esc_4"], index=0, bind=Iniciar_aplicacion)
+vp.menu(choices=["Elige un experimento", "escenario_1", "escenario_2", "esc_3", "esc_4"], index=0, bind=Iniciar_aplicacion)
 
