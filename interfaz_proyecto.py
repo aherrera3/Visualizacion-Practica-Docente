@@ -1,7 +1,6 @@
 
 import vpython as vp
-import modulo_particulas as mod 
-import modulo_escenarios as esc
+import modulo_escenarios as mod_esc
 
 vp.scene.title = "Proyecto Practica Docente\n\n"
 
@@ -35,42 +34,49 @@ resetButton = vp.button(text="Reset", pos=vp.scene.title_anchor, bind=Reset)
     
 
 ##############
-# en carpeta ESCENARIOS
-##############
 
+algunoEjecutandose = False
 
-##############
-
-
-def Iniciar_aplicacion(m):
+def Ejecutar(m):
+    # captura el evento   
     evento = m.selected
-    if(evento=="escenario_1"):
+    global algunoEjecutandose
+    
+    # verifica que ningun esté ejecutandose:
+    #        si False, entonces elimina el escenario actual en ejecuccion
+    #if(algunoEjecutandose):
+    #    esc.eliminarEjecutandose(evento)
+    
+    p1=None
+    p2=None
+    
+    if(evento == "Escenario1"):
+        algunoEjecutandose=True
         
         # corre programa: 
         t = 0
         dt = 0.1
-
-        e1 = mod.Electron(vp.vector(-15,0,0), vp.vector(1,0,0), vp.vector(0.1,1,0.7), 0.0005, 1, "electron") 
-
-        # antineutrino
-        an1 = mod.AntineutrinoElectronico(vp.vector(5,0,0), vp.vector(1,0,0), vp.vector(0.8,0.5,0.3), 0.00001, 0.5, "antineutrino")  
-  
+        
+        p1,p2=mod_esc.Escenario1_creacion()
+       
         while t<10:
             vp.rate(20)
-            if(running):
-                # evolucion del sistema  
-                e1.evolucion_temporal(dt)
-                an1.evolucion_temporal(dt)    
-        #while t<10:
-         #   vp.rate(20)
-          #  ejecutando = running
-           # esc.Escenario1(ejecutando, dt)
-            #if(running):  
-                #esc.Escenario1(dt)
-                #e1.evolucion_temporal(dt)
-                #an1.evolucion_temporal(dt)    
+            ejecutando = running
+            
+            if(running):  
+                mod_esc.Escenario1_avance(ejecutando,p1,p2,dt)  
                 t+=dt
-    
-    
-vp.menu(choices=["Elige un experimento", "escenario_1", "esc_2", "esc_3", "esc_4"], index=0, bind=Iniciar_aplicacion)
+       
+                
+    elif(evento == "Escenario2"):
+        algunoEjecutandose=True
+        if(p1!=None and p2!=None):
+            mod_esc.Escenario1_destruccion(p1,p2)
+        
+       
+                 
+       
+# Menu de eleccion de escenarios
+#    Llama a la funcion Ejecutar(m) y ejecuta el escenario con el evento m correspondiente
+vp.menu(choices=["Elige un experimento", "Escenario1", "Escenario2", "Escenario3", "Escenario4"], index=0, bind=Ejecutar)
 
