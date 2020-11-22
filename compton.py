@@ -49,7 +49,7 @@ datos = np.loadtxt("longitudes_de_onda.csv", dtype=int)
 conversion = {}
 
 for i in datos:
-    conversion[str(i[0])] = (i[1], i[2], i[3])
+    conversion[str(i[0])] = (i[1]/255, i[2]/255, i[3]/255)
 
 
 def choque(foton):
@@ -120,6 +120,6 @@ while True:
         if t >=2.5:
             fotones.append([photon(vector(4,0,0), vector(0,0,0), 380),True])
             t=0
-    if n >= 100:
+    if n >= 200:
         break
 
