@@ -78,6 +78,26 @@ class Nucleo(ParticulaFundamental):
     pass
 
 
+class Photon(ParticulaFundamental):
+    def __init__(self, velocidad, posicion, longitud_onda, conversion:dict):
+        self.conversion = conversion
+        self.esfera = vp.sphere(pos=posicion, color=vp.vector(*conversion[str(longitud_onda)]), opacity=(1), make_trail=True, velocidad=velocidad,radius=0.3, trail_radius=(0.05))
+        self.velocidad = velocidad
+        self.posicion = posicion
+        self.longitud_onda = longitud_onda
+        
+    #def evolucion_temporal(self, dt):
+    #    self.esfera.pos += self.velocidad*dt
+    #    self.posicion = self.posicion+self.velocidad*dt
+
+    def cambiar_velocidad(self, velocidad_nueva):
+        self.velocidad = velocidad_nueva
+
+    def cambiar_longitud_onda(self, l_nueva):
+        color_nuevo = vp.vector(*self.conversion[str(int(l_nueva))])
+        self.esfera.color = color_nuevo
+        self.esfera.trail_color = color_nuevo
+
 
 
 ##############################################################################

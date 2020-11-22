@@ -2,6 +2,7 @@
 
 import vpython as vp
 import modulo_particulas as mod
+import numpy as np
 
 particulas=[]
 
@@ -79,6 +80,60 @@ def Escenario2_destruccion(alfa, nucleo):        # no funciona bien
     nucleo.eliminar()   
     
         
+##############################################################################
+# Escenario 3
+##############################################################################    
+
+def Escenario3_ejecutar():
+    global particulas
+    particulas.clear()
+    
+    datos = np.loadtxt("longitudes_de_onda.csv", dtype=int)
+    conversion = {}
+    
+    for i in datos:
+        conversion[str(i[0])] = (i[1]/255, i[2]/255, i[3]/255)
+
+    def choque(foton: object):
+        v = vp.mag(foton.velocidad)
+        theta = np.random.random()*np.pi*2
+        phi = np.arccos(np.random.random()*2-1)
+        vx = v*np.sin(theta)*np.cos(phi)
+        vy = v*np.sin(theta)*np.sin(phi)
+        vz = v*np.cos(theta)
+        wave_lenghtf = round(380+(199*(1-np.cos(theta))), 0)
+        return vp.vector(vx, vy, vz), wave_lenghtf
+    
+  
+    # Creacion de objetos:
+    fotones = [[ mod.Photon(vp.vector(4, 0, 0), vp.vector(0, 0, 0), 380, conversion), True ]]
+    
+    # corre: 
+    dt = 0.1
+    t = 0
+    n = 0
+    while True:
+        vp.rate(50)
+    
+        t += dt
+    
+        for i in range(len(fotones)):
+            if round(fotones[i][0].posicion.x, 0) == 10 and fotones[i][1]: #and u:
+                velocidad_nueva, l_nueva = choque(fotones[i][0])
+                fotones[i][0].cambiar_velocidad(velocidad_nueva)
+                fotones[i][0].cambiar_longitud_onda(l_nueva)
+                fotones[i][0].evolucion_temporal(dt)
+                fotones[i][1] = False
+                n += 1
+            else:
+                fotones[i][0].evolucion_temporal(dt)
+            if vp.mag(fotones[i][0].posicion - vp.vector(10,0,0)) >= 10.0:
+                fotones[i][0].velocidad = vp.vector(0, 0, 0)
+            if t >=2.5:
+                fotones.append([ mod.Photon(vp.vector(4,0,0), vp.vector(0,0,0), 380, conversion), True])
+                t=0
+        if n >= 200:
+            break
 
 
 

@@ -94,7 +94,11 @@ def Ejecutar(m):
                 mod_esc.Escenario2_avance(ejecutando,p1,p2,dt)  
                 t+=dt
                 
-                
+    elif(evento == "Escenario3"):
+        eventoAnterior = evento
+        algunoEjecutandose=True          
+         
+        mod_esc.Escenario3_ejecutar()
         
        
                  
