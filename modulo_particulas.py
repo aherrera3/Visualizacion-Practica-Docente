@@ -51,15 +51,25 @@ class ParticulaFundamental(Particula, ABC):
         self.radio=radio
         self.esfera= vp.sphere(pos=posicion,radius=radio,color=color, make_trail=True, shininess=0,masa=masa,velocidad=velocidad)
 
-    def eliminar(self):    #no funciona bien
+    #def eliminar(self):   
+    #    self.esfera.visible=False
+    #    self.etiqueta.visible=False
+    #    del self.esfera
+    #    del self.etiqueta
+        
+        #if (self.esfera.make_trail):   # si tiene trayectoria
+        #    self.esfera.clear_trail()
+            
+    def evolucion_temporal(self, dt):
+        self.posicion = vp.vector(self.posicion + self.velocidad*dt)
+        self.esfera.pos=self.posicion        
+        
+    def self_destruction(self):
         self.esfera.visible=False
         self.etiqueta.visible=False
         if (self.esfera.make_trail):   # si tiene trayectoria
-            self.esfera.clear_trail()
-            
-    def evolucion_temporal(self, dt):  #funciona bien
-        self.posicion = vp.vector(self.posicion + self.velocidad*dt)
-        self.esfera.pos=self.posicion        
+           self.esfera.clear_trail()
+        del self
     
 
 # Clase que representa a un electrón y hereda de ParticulaFundamental

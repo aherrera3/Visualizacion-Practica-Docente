@@ -36,11 +36,14 @@ resetButton = vp.button(text="Reset", pos=vp.scene.title_anchor, bind=Reset)
 ##############
 
 algunoEjecutandose = False
-particulas = []
+#particulas = []
 eventoAnterior = "" # lista con el evento anterior
 
+p1=None
+p2=None
+
 def Ejecutar(m):
-    global algunoEjecutandose, particulas, eventoAnterior
+    global algunoEjecutandose, p1, p2, eventoAnterior
     
     # verifica que ningun escenario esté ejecutandose: si True, entonces elimina el escenario en ejecuccion
     if(algunoEjecutandose):
@@ -50,10 +53,12 @@ def Ejecutar(m):
     # captura el evento   
     evento = m.selected
     
-    p1=None
-    p2=None
     
     if(evento == "Escenario1"):
+        #for obj in vp.scene.objects:
+        #    obj.visible=False
+        #    del obj
+            
         eventoAnterior = evento
         algunoEjecutandose=True
         
@@ -62,8 +67,8 @@ def Ejecutar(m):
         dt = 0.1
         
         p1,p2=mod_esc.Escenario1_creacion()
-        particulas.append(p1)
-        particulas.append(p2)
+        #particulas.append(p1)
+        #particulas.append(p2)
        
         while t<10:
             vp.rate(20)
@@ -73,8 +78,25 @@ def Ejecutar(m):
                 mod_esc.Escenario1_avance(ejecutando,p1,p2,dt)  
                 t+=dt
        
-                
+        
     elif(evento == "Escenario2"):
+        #del p1
+        #del p2
+        print(p1,p2)
+        #for obj in vp.scene.objects:
+        #    obj.visible=False
+        #    del obj
+        #print("p1 exite? : ", p1)
+        #p1.visible=False
+        #del p1
+        #p2.visible=False
+        #del p2
+            
+        #print("posicion de:" ,p1.posicion)    
+        
+        #print("p1 exite despues? : ", p1)
+        #print(" particulas sí existe: ", particulas)    
+            
         eventoAnterior = evento
         algunoEjecutandose=True
         
@@ -83,8 +105,8 @@ def Ejecutar(m):
         dt = 0.1
         
         p1,p2=mod_esc.Escenario2_creacion()
-        particulas.append(p1)
-        particulas.append(p2)
+        #particulas.append(p1)
+        #particulas.append(p2)
        
         while t<10:
             vp.rate(20)
@@ -95,12 +117,14 @@ def Ejecutar(m):
                 t+=dt
                 
     elif(evento == "Escenario3"):
+        #for obj in vp.scene.objects:
+        #    obj.visible=False
+        #    del obj
+            
         eventoAnterior = evento
         algunoEjecutandose=True          
          
         mod_esc.Escenario3_ejecutar()
-        
-       
                  
        
 # Menu de eleccion de escenarios

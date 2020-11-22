@@ -41,8 +41,12 @@ def Escenario1_avance(ejecutando,e1,an1,dt):    # funciona bien
         
 # Funcion que elimina el escenario 1    
 def Escenario1_destruccion(e1, an1):        # no funciona bien
-    e1.eliminar()
-    an1.eliminar()
+    global particulas
+    particulas.clear()
+    e1.self_destruction()    
+    an1.self_destruction()
+    #e1.eliminar()
+    #an1.eliminar()
     
     
 
@@ -53,21 +57,19 @@ def Escenario1_destruccion(e1, an1):        # no funciona bien
 def Escenario2_creacion():
     global particulas
     particulas.clear()
-    print("lista vacia? :", particulas)
     # creacion de objetos:
     alfa = mod.Alpha(vp.vector(-15,0,0), vp.vector(1,0,0), vp.vector(0.1,1,0.7), 6.64e-27, 2, "Particula \n alpha" )
     nucleo = mod.Nucleo(vp.vector(5,0,0), vp.vector(1,0,0), vp.vector(0.8,0.5,0.3), 0.001, 1, "Nucleo \n (target)")  
     
     particulas.append(alfa)
     particulas.append(nucleo)
-    print("lista con alfa y nucleo : ", particulas)
     
     #print("escenario 2 creacion: ", particulas)
     
     return alfa, nucleo      
    
 # Funcion que da avance al escenario 2     
-def Escenario2_avance(ejecutando,alfa,nucleo,dt):    # funciona bien
+def Escenario2_avance(ejecutando,alfa,nucleo,dt):  
     if(ejecutando):
         # evolucion del sistema  
         alfa.evolucion_temporal(dt)
@@ -75,9 +77,11 @@ def Escenario2_avance(ejecutando,alfa,nucleo,dt):    # funciona bien
         
         
 # Funcion que elimina el escenario 2  
-def Escenario2_destruccion(alfa, nucleo):        # no funciona bien
-    alfa.eliminar()
-    nucleo.eliminar()   
+def Escenario2_destruccion(alfa, nucleo):  
+    alfa.self_destruction()  
+    nucleo.self_destruction()  
+    #alfa.eliminar()
+    #nucleo.eliminar()   
     
         
 ##############################################################################
