@@ -36,21 +36,25 @@ resetButton = vp.button(text="Reset", pos=vp.scene.title_anchor, bind=Reset)
 ##############
 
 algunoEjecutandose = False
+particulas = []
+eventoAnterior = "" # lista con el evento anterior
 
 def Ejecutar(m):
+    global algunoEjecutandose, particulas, eventoAnterior
+    
+    # verifica que ningun escenario esté ejecutandose: si True, entonces elimina el escenario en ejecuccion
+    if(algunoEjecutandose):
+        mod_esc.eliminarAnterior(eventoAnterior)
+        
+    
     # captura el evento   
     evento = m.selected
-    global algunoEjecutandose
-    
-    # verifica que ningun esté ejecutandose:
-    #        si False, entonces elimina el escenario actual en ejecuccion
-    #if(algunoEjecutandose):
-    #    esc.eliminarEjecutandose(evento)
     
     p1=None
     p2=None
     
     if(evento == "Escenario1"):
+        eventoAnterior = evento
         algunoEjecutandose=True
         
         # corre programa: 
@@ -58,6 +62,8 @@ def Ejecutar(m):
         dt = 0.1
         
         p1,p2=mod_esc.Escenario1_creacion()
+        particulas.append(p1)
+        particulas.append(p2)
        
         while t<10:
             vp.rate(20)
@@ -69,9 +75,26 @@ def Ejecutar(m):
        
                 
     elif(evento == "Escenario2"):
+        eventoAnterior = evento
         algunoEjecutandose=True
-        if(p1!=None and p2!=None):
-            mod_esc.Escenario1_destruccion(p1,p2)
+        
+        # corre programa: 
+        t = 0
+        dt = 0.1
+        
+        p1,p2=mod_esc.Escenario2_creacion()
+        particulas.append(p1)
+        particulas.append(p2)
+       
+        while t<10:
+            vp.rate(20)
+            ejecutando = running
+            
+            if(running):  
+                mod_esc.Escenario2_avance(ejecutando,p1,p2,dt)  
+                t+=dt
+                
+                
         
        
                  

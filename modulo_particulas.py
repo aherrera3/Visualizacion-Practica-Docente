@@ -3,14 +3,13 @@ from abc import ABC, abstractmethod
 import vpython as vp
 
 
-#########################################################################
+##############################################################################
 # Clase principal
-#########################################################################
+##############################################################################
 class Particula(ABC):
     
     def __init__(self, posicion, velocidad, nombre):
         self.posicion=posicion
-        self.nombre=nombre
         self.velocidad=velocidad
         self.etiqueta = vp.label(pos=posicion, text=nombre, color=vp.vector(0.1,1,0.7), opacity=0.7, height=15, box=0)
         
@@ -54,6 +53,7 @@ class ParticulaFundamental(Particula, ABC):
 
     def eliminar(self):    #no funciona bien
         self.esfera.visible=False
+        self.etiqueta.visible=False
         if (self.esfera.make_trail):   # si tiene trayectoria
             self.esfera.clear_trail()
             
@@ -70,15 +70,19 @@ class Electron(ParticulaFundamental):
 # Clase que representa a un antineutrino electronico y hereda de ParticulaFundamental        
 class AntineutrinoElectronico(ParticulaFundamental): 
     pass
+
+class Alpha(ParticulaFundamental):
+    pass
     
-   
+class Nucleo(ParticulaFundamental):
+    pass
 
 
 
 
-##########################################################################
+##############################################################################
 # Clase que representa un particula compuesta y hereda de Particula    
-##########################################################################
+##############################################################################
 class ParticulaCompuesta(Particula,ABC):
     
     # Metodo constructor
@@ -87,14 +91,9 @@ class ParticulaCompuesta(Particula,ABC):
         self.lado=lado
         self.apotema=(3)**0.5*lado/6
         
-    def mover():
-        pass
-        
 # Clase que hereda de ParticulaCompuesta    
 class Neutron(ParticulaCompuesta):    
-    
-    def mover(self):
-        print("neutron: ", self.lado, self.posicion)
+    pass
 
          
         
