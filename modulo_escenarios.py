@@ -6,10 +6,21 @@ import numpy as np
 
 particulas=[]
 
-# Funcion que retorna el arreglo con las particulas del escenario actual
-def darParticulas():
-    return particulas
+#datos de longitudes de ondas
+datos = np.loadtxt("longitudes_de_onda.csv", dtype=int)
+conversion = {}
+for i in datos:
+    conversion[str(i[0])] = (i[1]/255, i[2]/255, i[3]/255)
 
+def limpiar_escenario():
+    
+    for obj in vp.scene.objects:
+        obj.visible=False
+        if obj.make_trail:
+            obj.clear_trail()
+        del obj
+    global particulas
+    particulas.clear()
 
 ##############################################################################
 # Escenario 1
@@ -19,7 +30,7 @@ def darParticulas():
 def Escenario1_creacion():
     global particulas
     particulas.clear()
-    
+    limpiar_escenario()
     # creacion de objetos:
     e1 = mod.Electron(vp.vector(-15,0,0), vp.vector(1,0,0), vp.vector(0.1,1,0.7), 0.0005, 1, "electron") 
     an1 = mod.AntineutrinoElectronico(vp.vector(5,0,0), vp.vector(1,0,0), vp.vector(0.8,0.5,0.3), 0.00001, 0.5, "antineutrino")  
@@ -45,8 +56,7 @@ def Escenario1_destruccion(e1, an1):        # no funciona bien
     particulas.clear()
     e1.self_destruction()    
     an1.self_destruction()
-    #e1.eliminar()
-    #an1.eliminar()
+
     
     
 
@@ -57,15 +67,14 @@ def Escenario1_destruccion(e1, an1):        # no funciona bien
 def Escenario2_creacion():
     global particulas
     particulas.clear()
+    limpiar_escenario()
     # creacion de objetos:
     alfa = mod.Alpha(vp.vector(-15,0,0), vp.vector(1,0,0), vp.vector(0.1,1,0.7), 6.64e-27, 2, "Particula \n alpha" )
     nucleo = mod.Nucleo(vp.vector(5,0,0), vp.vector(1,0,0), vp.vector(0.8,0.5,0.3), 0.001, 1, "Nucleo \n (target)")  
     
     particulas.append(alfa)
     particulas.append(nucleo)
-    
-    #print("escenario 2 creacion: ", particulas)
-    
+
     return alfa, nucleo      
    
 # Funcion que da avance al escenario 2     
@@ -87,59 +96,58 @@ def Escenario2_destruccion(alfa, nucleo):
 ##############################################################################
 # Escenario 3
 ##############################################################################    
-
-def Escenario3_ejecutar():
-    global particulas
+t = 0 #variables globales usadas en los metodos.
+n = 0
+def Escenario3_creacion():
+    #estado inicial
+    global particulas, conversion,t,n
     particulas.clear()
-    
-    datos = np.loadtxt("longitudes_de_onda.csv", dtype=int)
-    conversion = {}
-    
-    for i in datos:
-        conversion[str(i[0])] = (i[1]/255, i[2]/255, i[3]/255)
-
-    def choque(foton: object):
-        v = vp.mag(foton.velocidad)
-        theta = np.random.random()*np.pi*2
-        phi = np.arccos(np.random.random()*2-1)
-        vx = v*np.sin(theta)*np.cos(phi)
-        vy = v*np.sin(theta)*np.sin(phi)
-        vz = v*np.cos(theta)
-        wave_lenghtf = round(380+(199*(1-np.cos(theta))), 0)
-        return vp.vector(vx, vy, vz), wave_lenghtf
-    
-  
+    limpiar_escenario()
+    t=0
+    n=0
     # Creacion de objetos:
-    fotones = [[ mod.Photon(vp.vector(4, 0, 0), vp.vector(0, 0, 0), 380, conversion), True ]]
-    
-    # corre: 
-    dt = 0.1
-    t = 0
-    n = 0
-    while True:
-        vp.rate(50)
-    
-        t += dt
-    
-        for i in range(len(fotones)):
-            if round(fotones[i][0].posicion.x, 0) == 10 and fotones[i][1]: #and u:
-                velocidad_nueva, l_nueva = choque(fotones[i][0])
-                fotones[i][0].cambiar_velocidad(velocidad_nueva)
-                fotones[i][0].cambiar_longitud_onda(l_nueva)
-                fotones[i][0].evolucion_temporal(dt)
-                fotones[i][1] = False
-                n += 1
-            else:
-                fotones[i][0].evolucion_temporal(dt)
-            if vp.mag(fotones[i][0].posicion - vp.vector(10,0,0)) >= 10.0:
-                fotones[i][0].velocidad = vp.vector(0, 0, 0)
-            if t >=2.5:
-                fotones.append([ mod.Photon(vp.vector(4,0,0), vp.vector(0,0,0), 380, conversion), True])
-                t=0
-        if n >= 200:
-            break
+    #Se asigna un booleano para saber si la particula se encuentra antes del choque (True)
+    #o despues del choque (False)
+    particulas.append([ mod.Photon(vp.vector(4, 0, 0), vp.vector(0, 0, 0), 380, conversion), True ])
 
+def choque(foton: object): #choque de un foton, cambia longitud de onda.
+    v = vp.mag(foton.velocidad)
+    theta = np.random.random()*np.pi*2
+    phi = np.arccos(np.random.random()*2-1)
+    vx = v*np.sin(theta)*np.cos(phi)
+    vy = v*np.sin(theta)*np.sin(phi)
+    vz = v*np.cos(theta)
+    wave_lenghtf = round(380+(199*(1-np.cos(theta))), 0)
+    #retorna la direción de la velocidad nueva y la longitud de onda nueva
+    return vp.vector(vx, vy, vz), wave_lenghtf 
 
+def escenario3_avance(dt):
+    global particulas, t, n, conversion
+    for i in range(len(particulas)):
+        #verifica si la particula esta en el punto de choque
+        if round(particulas[i][0].posicion.x, 0) == 10 and particulas[i][1]: 
+            #genera el choque
+            velocidad_nueva, l_nueva = choque(particulas[i][0])
+            #actualiza las propiedades
+            particulas[i][0].cambiar_velocidad(velocidad_nueva)
+            particulas[i][0].cambiar_longitud_onda(l_nueva)
+            #evolucion temporal
+            particulas[i][0].evolucion_temporal(dt)
+            #la particula choco 
+            particulas[i][1] = False
+            n += 1
+        else:
+            particulas[i][0].evolucion_temporal(dt)
+
+        #detiende la particula si se ha alejado mas de 10
+        if vp.mag(particulas[i][0].posicion - vp.vector(10,0,0)) >= 10.0:
+            particulas[i][0].velocidad = vp.vector(0, 0, 0)
+        #genera particulas nuevas cada cierto tiempo
+        if t >=2.5:
+            particulas.append([ mod.Photon(vp.vector(4,0,0), vp.vector(0,0,0), 380, conversion), True])
+            t=0
+    t+=dt
+        
 
 # Elimina el escenario anteior que se está ejecutando 
 def eliminarAnterior(eventoAnterior: str):

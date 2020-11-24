@@ -49,15 +49,14 @@ def Ejecutar(m):
     if(algunoEjecutandose):
         mod_esc.eliminarAnterior(eventoAnterior)
         
+    mod_esc.limpiar_escenario()
     
     # captura el evento   
     evento = m.selected
     
     
     if(evento == "Escenario1"):
-        #for obj in vp.scene.objects:
-        #    obj.visible=False
-        #    del obj
+        
             
         eventoAnterior = evento
         algunoEjecutandose=True
@@ -67,36 +66,18 @@ def Ejecutar(m):
         dt = 0.1
         
         p1,p2=mod_esc.Escenario1_creacion()
-        #particulas.append(p1)
-        #particulas.append(p2)
-       
-        while t<10:
+        while True:
             vp.rate(20)
             ejecutando = running
             
             if(running):  
                 mod_esc.Escenario1_avance(ejecutando,p1,p2,dt)  
                 t+=dt
-       
+            if t>10:
+                break
         
     elif(evento == "Escenario2"):
-        #del p1
-        #del p2
-        print(p1,p2)
-        #for obj in vp.scene.objects:
-        #    obj.visible=False
-        #    del obj
-        #print("p1 exite? : ", p1)
-        #p1.visible=False
-        #del p1
-        #p2.visible=False
-        #del p2
-            
-        #print("posicion de:" ,p1.posicion)    
-        
-        #print("p1 exite despues? : ", p1)
-        #print(" particulas sí existe: ", particulas)    
-            
+                    
         eventoAnterior = evento
         algunoEjecutandose=True
         
@@ -105,27 +86,34 @@ def Ejecutar(m):
         dt = 0.1
         
         p1,p2=mod_esc.Escenario2_creacion()
-        #particulas.append(p1)
-        #particulas.append(p2)
-       
-        while t<10:
+
+        while True:
             vp.rate(20)
             ejecutando = running
             
             if(running):  
                 mod_esc.Escenario2_avance(ejecutando,p1,p2,dt)  
                 t+=dt
-                
-    elif(evento == "Escenario3"):
-        #for obj in vp.scene.objects:
-        #    obj.visible=False
-        #    del obj
-            
+            if t>10:
+                break
+    elif(evento == "Escenario3"):         
         eventoAnterior = evento
         algunoEjecutandose=True          
          
-        mod_esc.Escenario3_ejecutar()
-                 
+        mod_esc.Escenario3_creacion()
+        dt = 0.1
+        while True:
+            vp.rate(20)
+            ejecutando = running
+            try:
+                if (running):
+                    mod_esc.escenario3_avance(dt)
+                if mod_esc.n >100:
+                    break
+            except:
+                break
+
+
        
 # Menu de eleccion de escenarios
 #    Llama a la funcion Ejecutar(m) y ejecuta el escenario con el evento m correspondiente
