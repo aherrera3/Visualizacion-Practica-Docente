@@ -12,8 +12,9 @@ conversion = {}
 for i in datos:
     conversion[str(i[0])] = (i[1]/255, i[2]/255, i[3]/255)
 
+
+# Funcion que elimina los objetos del escenario
 def limpiar_escenario():
-    
     for obj in vp.scene.objects:
         obj.visible=False
         if obj.make_trail:
@@ -21,16 +22,21 @@ def limpiar_escenario():
         del obj
     global particulas
     particulas.clear()
-
+        
+    
 ##############################################################################
 # Escenario 1
 ##############################################################################
 
+# Arreglo de velocidades y posiciones iniciales. Primera posicion para electron, segunda para antineutrino electronico
+#posiciones_iniales = [vp.vector(-15,0,0), vp.vector(5,0,0)]
+#velocidades_iniciales = [vp.vector(1,0,0), vp.vector(1,0,0)]
+
+
 # Funcion que crea las particulas del escenario 1
-def Escenario1_creacion():
+def escenario1_creacion():
     global particulas
     particulas.clear()
-    limpiar_escenario()
     # creacion de objetos:
     e1 = mod.Electron(vp.vector(-15,0,0), vp.vector(1,0,0), vp.vector(0.1,1,0.7), 0.0005, 1, "electron") 
     an1 = mod.AntineutrinoElectronico(vp.vector(5,0,0), vp.vector(1,0,0), vp.vector(0.8,0.5,0.3), 0.00001, 0.5, "antineutrino")  
@@ -38,71 +44,62 @@ def Escenario1_creacion():
     particulas.append(e1)
     particulas.append(an1)
     
-    print("escenario 1 creacion: ", particulas)
-    
-    return e1, an1      
    
 # Funcion que da avance al escenario 1     
-def Escenario1_avance(ejecutando,e1,an1,dt):    # funciona bien
+def escenario1_avance(ejecutando,dt):    # funciona bien
+    global particulas
     if(ejecutando):
         # evolucion del sistema  
-        e1.evolucion_temporal(dt)
-        an1.evolucion_temporal(dt)  
+        particulas[0].evolucion_temporal(dt)
+        particulas[1].evolucion_temporal(dt)  
         
-        
-# Funcion que elimina el escenario 1    
-def Escenario1_destruccion(e1, an1):        # no funciona bien
-    global particulas
-    particulas.clear()
-    e1.self_destruction()    
-    an1.self_destruction()
 
-    
-    
+# Funcion que reinicia el escenario
+def escenario1_reiniciar():
+    global particulas
+    particulas[0].reiniciar(posiciones_iniales[0], velocidades_iniciales[1])
+    particulas[1].reiniciar(posiciones_iniales[1], velocidades_iniciales[1])        
+        
+        
 
 ##############################################################################
 # Escenario 2
 ##############################################################################    
 # Funcion que crea las particulas del escenario 2
-def Escenario2_creacion():
-    global particulas
+
+posiciones_iniales = [vp.vector(-15,5,0), vp.vector(5,0,0)]
+velocidades_iniciales = [vp.vector(1,0,0), vp.vector(0,0,0)]
+m_alfa = 6.64e-27
+
+def escenario2_creacion():
+    global particulas, posiciones_iniales, velocidades_iniciales
     particulas.clear()
-    limpiar_escenario()
     # creacion de objetos:
-    alfa = mod.Alpha(vp.vector(-15,0,0), vp.vector(1,0,0), vp.vector(0.1,1,0.7), 6.64e-27, 2, "Particula \n alpha" )
-    nucleo = mod.Nucleo(vp.vector(5,0,0), vp.vector(1,0,0), vp.vector(0.8,0.5,0.3), 0.001, 1, "Nucleo \n (target)")  
+    alfa = mod.Alpha(posiciones_iniales[0], velocidades_iniciales[0], vp.vector(0.1,1,0.7), m_alfa, 2, "Particula \n alpha" )
+    nucleo = mod.Nucleo(posiciones_iniales[1], velocidades_iniciales[1], vp.vector(0.8,0.5,0.3), 0.001, 1, "Nucleo \n (target)")  
     
     particulas.append(alfa)
-    particulas.append(nucleo)
-
-    return alfa, nucleo      
-   
-# Funcion que da avance al escenario 2     
-def Escenario2_avance(ejecutando,alfa,nucleo,dt):  
-    if(ejecutando):
-        # evolucion del sistema  
-        alfa.evolucion_temporal(dt)
-        nucleo.evolucion_temporal(dt)  
-        
-        
-# Funcion que elimina el escenario 2  
-def Escenario2_destruccion(alfa, nucleo):  
-    alfa.self_destruction()  
-    nucleo.self_destruction()  
-    #alfa.eliminar()
-    #nucleo.eliminar()   
+    particulas.append(nucleo)   
     
+# Funcion que da avance al escenario 2     
+def escenario2_avance(ejecutando,dt): 
+    global particulas
+    if(ejecutando):
+        particulas[0].evolucion_temporal(dt)
+        particulas[1].evolucion_temporal(dt)  
+        
+        
         
 ##############################################################################
 # Escenario 3
 ##############################################################################    
 t = 0 #variables globales usadas en los metodos.
 n = 0
-def Escenario3_creacion():
+def escenario3_creacion():
     #estado inicial
     global particulas, conversion,t,n
     particulas.clear()
-    limpiar_escenario()
+    
     t=0
     n=0
     # Creacion de objetos:
@@ -148,16 +145,3 @@ def escenario3_avance(dt):
             t=0
     t+=dt
         
-
-# Elimina el escenario anteior que se está ejecutando 
-def eliminarAnterior(eventoAnterior: str):
-    if(eventoAnterior=="Escenario1"): 
-        Escenario1_destruccion(particulas[0], particulas[1])
-    elif(eventoAnterior=="Escenario2"):
-        Escenario2_destruccion(particulas[0], particulas[1])
-    
-    #...
-
-   
-
-                

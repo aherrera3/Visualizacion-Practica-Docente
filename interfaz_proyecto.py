@@ -16,6 +16,8 @@ vp.scene.append_to_caption("\n caption")
 ###########
 
 running = False
+seOprimioReset = False
+evento = ""
 
 def Run(b):
     global running
@@ -26,84 +28,75 @@ def Run(b):
 beginButton = vp.button(text="Run", pos=vp.scene.title_anchor, bind=Run)    
 
 def Reset(r):
+    #global running, evento
     pass
+    #mod_esc.escenario1_reiniciar()
+    #seOprimioReset = True
+    #if(running):
+    #    Ejecutar(evento)
     #estado_inicial()
     # para y reinicia la operacion anterior
 
 resetButton = vp.button(text="Reset", pos=vp.scene.title_anchor, bind=Reset)    
-    
+
 
 ##############
 
-algunoEjecutandose = False
-#particulas = []
-eventoAnterior = "" # lista con el evento anterior
-
-p1=None
-p2=None
 
 def Ejecutar(m):
-    global algunoEjecutandose, p1, p2, eventoAnterior
+    global seOprimioReset, evento
     
-    # verifica que ningun escenario esté ejecutandose: si True, entonces elimina el escenario en ejecuccion
-    if(algunoEjecutandose):
-        mod_esc.eliminarAnterior(eventoAnterior)
+    if(seOprimioReset==False):
+        mod_esc.limpiar_escenario()
         
-    mod_esc.limpiar_escenario()
-    
-    # captura el evento   
-    evento = m.selected
-    
+        # captura el evento   
+        evento = m.selected
     
     if(evento == "Escenario1"):
-        
-            
-        eventoAnterior = evento
-        algunoEjecutandose=True
-        
         # corre programa: 
         t = 0
-        dt = 0.1
+        dt = 0.001
         
-        p1,p2=mod_esc.Escenario1_creacion()
+        if(seOprimioReset==False):
+            mod_esc.escenario1_creacion()
+        
         while True:
-            vp.rate(20)
+            vp.rate(12000)
             ejecutando = running
             
             if(running):  
-                mod_esc.Escenario1_avance(ejecutando,p1,p2,dt)  
+                mod_esc.escenario1_avance(ejecutando,dt)  
                 t+=dt
             if t>10:
                 break
+            
+        #if(seOprimioReset):
+            #seOprimioReset = False
+            #Ejecutar(m)
+            
         
     elif(evento == "Escenario2"):
-                    
-        eventoAnterior = evento
-        algunoEjecutandose=True
-        
         # corre programa: 
         t = 0
-        dt = 0.1
+        dt = 0.001
         
-        p1,p2=mod_esc.Escenario2_creacion()
-
+        mod_esc.escenario2_creacion()
+        
         while True:
-            vp.rate(20)
+            vp.rate(12000)
             ejecutando = running
             
             if(running):  
-                mod_esc.Escenario2_avance(ejecutando,p1,p2,dt)  
+                mod_esc.escenario2_avance(ejecutando,dt)  
                 t+=dt
             if t>10:
                 break
-    elif(evento == "Escenario3"):         
-        eventoAnterior = evento
-        algunoEjecutandose=True          
-         
-        mod_esc.Escenario3_creacion()
-        dt = 0.1
+            
+    elif(evento == "Escenario3"):    
+        mod_esc.escenario3_creacion()
+        dt = 0.001
         while True:
-            vp.rate(20)
+            vp.rate(12000)
             ejecutando = running
             try:
                 if (running):

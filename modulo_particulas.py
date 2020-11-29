@@ -19,22 +19,20 @@ class Particula(ABC):
     #    pass
     
     #@abstractmethod
-    def crear():
-        pass
+    #def crear():
+    #    pass
     
     #@abstractmethod
-    def eliminar():
-        pass
+    #def eliminar():
+    #    pass
     
-    #@abstractmethod   
+    @abstractmethod   
     def evolucion_temporal(dt):
-        pass    
+        pass
     
     #@abstractmethod
     def reiniciar():
         pass
-        #self.posicion=pos_ini
-        #self.velocidad=vel_ini
 
 
 
@@ -50,27 +48,17 @@ class ParticulaFundamental(Particula, ABC):
         self.masa=masa
         self.radio=radio
         self.esfera= vp.sphere(pos=posicion,radius=radio,color=color, make_trail=True, shininess=0,masa=masa,velocidad=velocidad)
-
-    #def eliminar(self):   
-    #    self.esfera.visible=False
-    #    self.etiqueta.visible=False
-    #    del self.esfera
-    #    del self.etiqueta
-        
-        #if (self.esfera.make_trail):   # si tiene trayectoria
-        #    self.esfera.clear_trail()
             
     def evolucion_temporal(self, dt):
         self.posicion = vp.vector(self.posicion + self.velocidad*dt)
         self.esfera.pos=self.posicion        
         
-    def self_destruction(self):
-        self.esfera.visible=False
-        self.etiqueta.visible=False
-        if (self.esfera.make_trail):   # si tiene trayectoria
-           self.esfera.clear_trail()
-        del self
-    
+    def reiniciar(self, pos_ini, vel_ini):
+        self.posicion = pos_ini
+        self.esfera.pos = self.posicion
+        self.velocidad=vel_ini    
+        if self.esfera.make_trail:
+            self.esfera.clear_trail()
 
 # Clase que representa a un electrón y hereda de ParticulaFundamental
 class Electron(ParticulaFundamental):
@@ -95,10 +83,6 @@ class Photon(ParticulaFundamental):
         self.velocidad = velocidad
         self.posicion = posicion
         self.longitud_onda = longitud_onda
-        
-    #def evolucion_temporal(self, dt):
-    #    self.esfera.pos += self.velocidad*dt
-    #    self.posicion = self.posicion+self.velocidad*dt
 
     def cambiar_velocidad(self, velocidad_nueva):
         self.velocidad = velocidad_nueva
