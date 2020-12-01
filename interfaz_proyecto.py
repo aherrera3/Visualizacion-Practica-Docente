@@ -2,18 +2,14 @@
 import vpython as vp
 import modulo_escenarios as mod_esc
 
-vp.scene.title = "Proyecto Practica Docente\n\n"
-
+vp.scene.title = "                                                                                  <b>Proyecto Practica Docente</b>\n\n"
 vp.scene.background = vp.color.black
 vp.scene.width = 1000 
 vp.scene.height = 600
+vp.scene.caption = "\n ... "
 
-vp.scene.caption = "\nExperimentos"
-vp.scene.append_to_caption("\n caption")
 
-###########
 # BOTONES
-###########
 
 running = False
 seOprimioReset = False
@@ -41,8 +37,6 @@ resetButton = vp.button(text="Reset", pos=vp.scene.title_anchor, bind=Reset)
 
 
 ##############
-
-
 def Ejecutar(m):
     global seOprimioReset, evento
     
@@ -50,7 +44,7 @@ def Ejecutar(m):
         mod_esc.limpiar_escenario()
         
         # captura el evento   
-        evento = m.selected
+        evento = m.selected    
     
     if(evento == "Escenario1"):
         # corre programa: 
@@ -106,9 +100,13 @@ def Ejecutar(m):
             except:
                 break
 
-
        
+vp.wtext(pos=vp.scene.title_anchor, text="                                                                                                                                               ")
+
 # Menu de eleccion de escenarios
 #    Llama a la funcion Ejecutar(m) y ejecuta el escenario con el evento m correspondiente
-vp.menu(choices=["Elige un experimento", "Escenario1", "Escenario2", "Escenario3", "Escenario4"], index=0, bind=Ejecutar)
+vp.menu(choices=["Elige un experimento", "Escenario1", "Escenario2", "Escenario3", "Escenario4"], index=0, pos=vp.scene.title_anchor, bind=Ejecutar)
 
+
+vp.scene.append_to_caption('                     ')
+vp.scene.append_to_caption('\n')
