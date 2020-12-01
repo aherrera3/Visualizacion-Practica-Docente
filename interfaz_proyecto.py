@@ -1,3 +1,4 @@
+## Archivo con la creacion de la interfaz y llamado de la creacion de escenarios
 
 import vpython as vp
 import modulo_escenarios as mod_esc
@@ -6,7 +7,6 @@ vp.scene.title = "                                                              
 vp.scene.background = vp.color.black
 vp.scene.width = 1000 
 vp.scene.height = 600
-vp.scene.caption = "\n ... "
 
 
 # BOTONES
@@ -51,6 +51,8 @@ def Ejecutar(m):
         t = 0
         dt = 0.001
         
+        vp.scene.caption = message[0]
+        
         if(seOprimioReset==False):
             mod_esc.escenario1_creacion()
         
@@ -76,6 +78,8 @@ def Ejecutar(m):
         
         mod_esc.escenario2_creacion()
         
+        vp.scene.caption = message[1]
+        
         while True:
             vp.rate(12000)
             ejecutando = running
@@ -87,8 +91,12 @@ def Ejecutar(m):
                 break
             
     elif(evento == "Escenario3"):    
+        
         mod_esc.escenario3_creacion()
         dt = 0.001
+        
+        vp.scene.caption = message[2]
+        
         while True:
             vp.rate(12000)
             ejecutando = running
@@ -108,5 +116,22 @@ vp.wtext(pos=vp.scene.title_anchor, text="                                      
 vp.menu(choices=["Elige un experimento", "Escenario1", "Escenario2", "Escenario3", "Escenario4"], index=0, pos=vp.scene.title_anchor, bind=Ejecutar)
 
 
+message = ['''\n Experimento demostrativo 1 ...
+        Efecto Fotoeléctrico ...
+        Otralinea ...''', '''\n Experimento demostrativo 2 ...
+        Scattering de Partículas alpha...
+        Otralinea ...''', '''\n Experimento demostrativo 3 ...
+        Scattering de Compton ...
+        Otralinea ...''', '''\n Experimento demostrativo 4 ...
+        Decaimiento beta negativo ...
+        Otralinea ...''', '''\n Experimento demostrativo 5 ...
+        otra linea ...
+        Otralinea ...''']
+
+#vp.scene.caption = '''\n Experimentos demostrativos ...
+#otra linea ...
+#Otralinea ...'''
+
 vp.scene.append_to_caption('                     ')
 vp.scene.append_to_caption('\n')
+

@@ -6,13 +6,6 @@ import numpy as np
 
 particulas=[]
 
-#datos de longitudes de ondas
-datos = np.loadtxt("longitudes_de_onda.csv", dtype=int)
-conversion = {}
-for i in datos:
-    conversion[str(i[0])] = (i[1]/255, i[2]/255, i[3]/255)
-
-
 # Funcion que elimina los objetos del escenario
 def limpiar_escenario():
     for obj in vp.scene.objects:
@@ -23,9 +16,9 @@ def limpiar_escenario():
     global particulas
     particulas.clear()
         
-    
+
 ##############################################################################
-# Escenario 1
+# Escenario 1: Efecto fotoelectrico
 ##############################################################################
 
 # Arreglo de velocidades y posiciones iniciales. Primera posicion para electron, segunda para antineutrino electronico
@@ -44,16 +37,14 @@ def escenario1_creacion():
     particulas.append(e1)
     particulas.append(an1)
     
-   
 # Funcion que da avance al escenario 1     
-def escenario1_avance(ejecutando,dt):    # funciona bien
+def escenario1_avance(ejecutando:bool, dt):    # funciona bien
     global particulas
     if(ejecutando):
         # evolucion del sistema  
         particulas[0].evolucion_temporal(dt)
         particulas[1].evolucion_temporal(dt)  
         
-
 # Funcion que reinicia el escenario
 def escenario1_reiniciar():
     global particulas
@@ -63,26 +54,27 @@ def escenario1_reiniciar():
         
 
 ##############################################################################
-# Escenario 2
+# Escenario 2: Scattering de partículas alfa
 ##############################################################################    
 # Funcion que crea las particulas del escenario 2
 
-posiciones_iniales = [vp.vector(-15,5,0), vp.vector(5,0,0)]
+posiciones_iniales = [vp.vector(-20,0,0), vp.vector(5,-5,0)]
 velocidades_iniciales = [vp.vector(1,0,0), vp.vector(0,0,0)]
 m_alfa = 6.64e-27
+m_nucleo = 6.6e-15
 
 def escenario2_creacion():
     global particulas, posiciones_iniales, velocidades_iniciales
     particulas.clear()
     # creacion de objetos:
-    alfa = mod.Alpha(posiciones_iniales[0], velocidades_iniciales[0], vp.vector(0.1,1,0.7), m_alfa, 2, "Particula \n alpha" )
-    nucleo = mod.Nucleo(posiciones_iniales[1], velocidades_iniciales[1], vp.vector(0.8,0.5,0.3), 0.001, 1, "Nucleo \n (target)")  
+    alfa = mod.Alpha(posiciones_iniales[0], velocidades_iniciales[0], vp.vector(0.1,1,0.7), m_alfa, 0.5, "Particula \n alpha" )
+    nucleo = mod.Nucleo(posiciones_iniales[1], velocidades_iniciales[1], vp.vector(0.8,0.5,0.3), m_nucleo, 1.5, "Nucleo \n (target)")  
     
     particulas.append(alfa)
     particulas.append(nucleo)   
     
 # Funcion que da avance al escenario 2     
-def escenario2_avance(ejecutando,dt): 
+def escenario2_avance(ejecutando:bool, dt): 
     global particulas
     if(ejecutando):
         particulas[0].evolucion_temporal(dt)
@@ -93,8 +85,15 @@ def escenario2_avance(ejecutando,dt):
 ##############################################################################
 # Escenario 3
 ##############################################################################    
+
+datos = np.loadtxt("longitudes_de_onda.csv", dtype=int)    #datos de longitudes de ondas
+conversion = {}
+for i in datos:
+    conversion[str(i[0])] = (i[1]/255, i[2]/255, i[3]/255)
+
 t = 0 #variables globales usadas en los metodos.
 n = 0
+
 def escenario3_creacion():
     #estado inicial
     global particulas, conversion,t,n

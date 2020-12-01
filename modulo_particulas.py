@@ -1,6 +1,8 @@
+## Archivo con las clases que representan a cada partícula.
 
 from abc import ABC, abstractmethod
 import vpython as vp
+import numpy as np
 
 
 ##############################################################################
@@ -69,8 +71,13 @@ class Electron(ParticulaFundamental):
 class AntineutrinoElectronico(ParticulaFundamental): 
     pass
 
+# Clase que representa a una particula alpha y hereda de ParticulaFundamental       
 class Alpha(ParticulaFundamental):
-    pass
+    def evolucion_temporal(self, dt):
+        x = self.posicion[0] + self.velocidad[0]*dt
+        y = x**2
+        self.posicion = vp.vector(x, y, 0);
+        self.esfera.pos=self.posicion   
     
 class Nucleo(ParticulaFundamental):
     pass
