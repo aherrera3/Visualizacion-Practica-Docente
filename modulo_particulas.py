@@ -15,27 +15,13 @@ class Particula(ABC):
         self.velocidad=velocidad
         self.etiqueta = vp.label(pos=posicion, text=nombre, color=vp.vector(0.1,1,0.7), opacity=0.7, height=15, box=0)
         
-    #Metodos
-    #@abstractmethod
-    #def mover():
-    #    pass
-    
-    #@abstractmethod
-    #def crear():
-    #    pass
-    
-    #@abstractmethod
-    #def eliminar():
-    #    pass
-    
-    @abstractmethod   
+    #@abstractmethod   
     def evolucion_temporal(dt):
         pass
     
     #@abstractmethod
     def reiniciar():
         pass
-
 
 
 ##############################################################################
@@ -62,26 +48,21 @@ class ParticulaFundamental(Particula, ABC):
         if self.esfera.make_trail:
             self.esfera.clear_trail()
 
+
 # Clase que representa a un electrón y hereda de ParticulaFundamental
 class Electron(ParticulaFundamental):
     pass
-   
-        
+     
 # Clase que representa a un antineutrino electronico y hereda de ParticulaFundamental        
 class AntineutrinoElectronico(ParticulaFundamental): 
     pass
 
 # Clase que representa a una particula alpha y hereda de ParticulaFundamental       
-class Alpha(ParticulaFundamental):
-    def evolucion_temporal(self, dt):
-        x = self.posicion[0] + self.velocidad[0]*dt
-        y = x**2
-        self.posicion = vp.vector(x, y, 0);
-        self.esfera.pos=self.posicion   
+class Alpha(ParticulaFundamental):  
+    def evolucion_temporal(self, dt, e, k , m_alfa):
+        
+        pass
     
-class Nucleo(ParticulaFundamental):
-    pass
-
 
 class Photon(ParticulaFundamental):
     def __init__(self, velocidad, posicion, longitud_onda, conversion:dict):

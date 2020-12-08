@@ -8,9 +8,7 @@ vp.scene.background = vp.color.black
 vp.scene.width = 1000 
 vp.scene.height = 600
 
-
 # BOTONES
-
 running = False
 seOprimioReset = False
 evento = ""
@@ -24,12 +22,14 @@ def Run(b):
 beginButton = vp.button(text="Run", pos=vp.scene.title_anchor, bind=Run)    
 
 def Reset(r):
-    #global running, evento
     pass
+    #global running, evento, seOprimioReset
     #mod_esc.escenario1_reiniciar()
+    
     #seOprimioReset = True
-    #if(running):
+    #if(running==True):       # si se para mientras está corriendo
     #    Ejecutar(evento)
+        
     #estado_inicial()
     # para y reinicia la operacion anterior
 
@@ -81,13 +81,12 @@ def Ejecutar(m):
         vp.scene.caption = message[1]
         
         while True:
-            vp.rate(12000)
+            vp.rate(5000)
             ejecutando = running
             
-            if(running):  
-                mod_esc.escenario2_avance(ejecutando,dt)  
-                t+=dt
-            if t>10:
+            if(running):
+                mod_esc.escenario2_avance(ejecutando,dt)
+            if(mod_esc.n>30):
                 break
             
     elif(evento == "Escenario3"):    
@@ -99,7 +98,6 @@ def Ejecutar(m):
         
         while True:
             vp.rate(12000)
-            ejecutando = running
             try:
                 if (running):
                     mod_esc.escenario3_avance(dt)

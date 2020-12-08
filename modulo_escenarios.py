@@ -47,10 +47,12 @@ def escenario1_avance(ejecutando:bool, dt):    # funciona bien
         
 # Funcion que reinicia el escenario
 def escenario1_reiniciar():
-    global particulas
-    particulas[0].reiniciar(posiciones_iniales[0], velocidades_iniciales[1])
-    particulas[1].reiniciar(posiciones_iniales[1], velocidades_iniciales[1])        
-        
+    #global particulas
+    #particulas[0].reiniciar(posiciones_iniales[0], velocidades_iniciales[1])
+    #particulas[1].reiniciar(posiciones_iniales[1], velocidades_iniciales[1])        
+    
+    limpiar_escenario()
+    escenario1_creacion() 
         
 
 ##############################################################################
@@ -58,27 +60,68 @@ def escenario1_reiniciar():
 ##############################################################################    
 # Funcion que crea las particulas del escenario 2
 
-posiciones_iniales = [vp.vector(-20,0,0), vp.vector(5,-5,0)]
-velocidades_iniciales = [vp.vector(1,0,0), vp.vector(0,0,0)]
-m_alfa = 6.64e-27
-m_nucleo = 6.6e-15
+m_alfa=6.64e-27
+e=1.602e-19
+k=8.987e9
+
+# alpha
+pos = vp.vector(-8,0.5,0)
+v = 5
+vel = vp.vector(v,0,0)   #cte
+
+# nucleo
+m_nucleo, color = 6.6e-15, vp.vector(0.1,1,0.7)
 
 def escenario2_creacion():
-    global particulas, posiciones_iniales, velocidades_iniciales
+    global particulas#, posiciones_iniales, velocidades_iniciales
     particulas.clear()
-    # creacion de objetos:
-    alfa = mod.Alpha(posiciones_iniales[0], velocidades_iniciales[0], vp.vector(0.1,1,0.7), m_alfa, 0.5, "Particula \n alpha" )
-    nucleo = mod.Nucleo(posiciones_iniales[1], velocidades_iniciales[1], vp.vector(0.8,0.5,0.3), m_nucleo, 1.5, "Nucleo \n (target)")  
     
-    particulas.append(alfa)
-    particulas.append(nucleo)   
-    
+    # se crea el nucleo
+    vp.sphere(pos=vp.vector(0,0,0), radius=0.5, color=color, make_trail=True, shininess=0, masa=m_nucleo, velocidad=vp.vector(0,0,0))
+       
+    # arreglos para guardar las particulas alpha. Inicia con una particula
+    particulas.append(vp.sphere(pos=pos, radius=0.5, color=color, make_trail=True, shininess=0, masa=m_alfa, vel=vel))
+
+
+t,n=0,0
+
 # Funcion que da avance al escenario 2     
 def escenario2_avance(ejecutando:bool, dt): 
-    global particulas
-    if(ejecutando):
-        particulas[0].evolucion_temporal(dt)
-        particulas[1].evolucion_temporal(dt)  
+    global particulas, t, n
+    
+    # particulas[0].evolucion_temporal(dt)
+    # particulas[1].evolucion_temporal(dt)
+    
+    for i in range(len(particulas)):
+        
+        # actualizacion (por diferencias finitas)
+        pos_antigua_x, pos_antigua_y = particulas[i].pos.x, particulas[i].pos.y
+                
+        # avance de posicion 
+        particulas[i].pos.x += particulas[i].vel.x*dt
+        particulas[i].pos.y += particulas[i].vel.y*dt
+            
+        particulas[i].pos = vp.vector(particulas[i].pos.x, particulas[i].pos.y, 0)
+            
+        # avance de velocidades
+        particulas[i].vel.x += e**2 *k *dt *pos_antigua_x /(m_alfa*(pos_antigua_x**2+pos_antigua_y**2)**(3/2)) 
+        particulas[i].vel.y += e**2 *k *dt *pos_antigua_y /(m_alfa*(pos_antigua_x**2+pos_antigua_y**2)**(3/2)) 
+            
+        # detiene el mov de la particula si pos en magnitud es > 10:
+        if(vp.mag(particulas[i].pos)>10):
+            particulas[i].vel = vp.vector(0, 0, 0)
+            
+        # crea y agrega nuevas particulas alpha al arreglo
+        if(t>3):
+            pos_y = np.random.random()-0.5     #parametro de impacto aleatorio
+            pos = vp.vector(-8, pos_y, 0)
+            vel = vp.vector(v,0,0)
+            particulas.append(vp.sphere(pos=pos, radius=0.5, color=color, make_trail=True, shininess=0, masa=m_alfa, vel=vel))
+            t=0
+            n+=1
+    t+=dt
+        
+         
         
         
         
