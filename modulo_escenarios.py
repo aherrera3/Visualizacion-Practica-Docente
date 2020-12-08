@@ -16,7 +16,6 @@ def limpiar_escenario():
     global particulas
     particulas.clear()
         
-
 ##############################################################################
 # Escenario 1: Efecto fotoelectrico
 ##############################################################################
@@ -44,6 +43,7 @@ def escenario1_avance(ejecutando:bool, dt):    # funciona bien
         # evolucion del sistema  
         particulas[0].evolucion_temporal(dt)
         particulas[1].evolucion_temporal(dt)  
+        print("escenario1_avance",particulas)
         
 # Funcion que reinicia el escenario
 def escenario1_reiniciar():
@@ -61,8 +61,6 @@ def escenario1_reiniciar():
 # Funcion que crea las particulas del escenario 2
 
 m_alfa=6.64e-27
-e=1.602e-19
-k=8.987e9
 
 # alpha
 pos = vp.vector(-8,0.5,0)
@@ -72,26 +70,26 @@ vel = vp.vector(v,0,0)   #cte
 # nucleo
 m_nucleo, color = 6.6e-15, vp.vector(0.1,1,0.7)
 
+t=0
+n=0
+
 def escenario2_creacion():
-    global particulas#, posiciones_iniales, velocidades_iniciales
+    global particulas,t,n#, posiciones_iniales, velocidades_iniciales
     particulas.clear()
-    
+    t=0
+    n=0
     # se crea el nucleo
     vp.sphere(pos=vp.vector(0,0,0), radius=0.5, color=color, make_trail=True, shininess=0, masa=m_nucleo, velocidad=vp.vector(0,0,0))
        
     # arreglos para guardar las particulas alpha. Inicia con una particula
-    particulas.append(mod.Alpha(pos, vel, color, m_alfa, 0.5, "Alpha"))
-
-
-t,n=0,0
+    particulas.append(mod.Alpha(pos, vel, vp.vector(0.5,1,0.7), m_alfa, 0.5, "Alpha"))
 
 # Funcion que da avance al escenario 2     
 def escenario2_avance(dt): 
-    global particulas, t, n, e, k, m_alfa
-    
+    global particulas, t, n
     for i in range(len(particulas)):
         
-        particulas[i].evolucion_temporal(dt, e, k , m_alfa)
+        particulas[i].evolucion_temporal1(dt)
         
         # detiene el mov de la particula si pos en magnitud es > 10:
         if(vp.mag(particulas[i].posicion)>10):
@@ -106,11 +104,9 @@ def escenario2_avance(dt):
             t=0
             n+=1
     t+=dt
-        
-         
-        
-        
-        
+ 
+
+     
 ##############################################################################
 # Escenario 3
 ##############################################################################    

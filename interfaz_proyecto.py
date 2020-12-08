@@ -40,11 +40,11 @@ resetButton = vp.button(text="Reset", pos=vp.scene.title_anchor, bind=Reset)
 def Ejecutar(m):
     global seOprimioReset, evento
     
-    if(seOprimioReset==False):
-        mod_esc.limpiar_escenario()
+    #if(seOprimioReset==False):
+    mod_esc.limpiar_escenario()
         
-        # captura el evento   
-        evento = m.selected    
+    # captura el evento   
+    evento = m.selected    
     
     if(evento == "Escenario1"):
         # corre programa: 
@@ -53,8 +53,8 @@ def Ejecutar(m):
         
         vp.scene.caption = message[0]
         
-        if(seOprimioReset==False):
-            mod_esc.escenario1_creacion()
+        #if(seOprimioReset==False):
+        mod_esc.escenario1_creacion()
         
         while True:
             vp.rate(12000)
