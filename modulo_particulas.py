@@ -61,7 +61,26 @@ class AntineutrinoElectronico(ParticulaFundamental):
 class Alpha(ParticulaFundamental):  
     def evolucion_temporal(self, dt, e, k , m_alfa):
         
-        pass
+        # actualizacion (por diferencias finitas)
+        pos_antigua_x, pos_antigua_y = self.posicion.x, self.posicion.y
+        
+        # avance de posicion 
+        self.posicion.x += self.velocidad.x*dt
+        self.posicion.y += self.velocidad.y*dt
+        
+        
+        self.posicion = vp.vector(self.posicion.x, self.posicion.y, 0)
+        self.esfera.pos=self.posicion
+        
+         # avance de velocidades
+        self.velocidad.x += e**2 *k *dt *pos_antigua_x /(m_alfa*(pos_antigua_x**2+pos_antigua_y**2)**(3/2)) 
+        self.velocidad.y += e**2 *k *dt *pos_antigua_y /(m_alfa*(pos_antigua_x**2+pos_antigua_y**2)**(3/2)) 
+        
+        self.velocidad = vp.vector(self.velocidad.x, self.velocidad.y, 0)
+      
+        self.esfera.velocidad=self.velocidad      
+        
+        
     
 
 class Photon(ParticulaFundamental):

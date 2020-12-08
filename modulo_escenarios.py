@@ -80,43 +80,29 @@ def escenario2_creacion():
     vp.sphere(pos=vp.vector(0,0,0), radius=0.5, color=color, make_trail=True, shininess=0, masa=m_nucleo, velocidad=vp.vector(0,0,0))
        
     # arreglos para guardar las particulas alpha. Inicia con una particula
-    particulas.append(vp.sphere(pos=pos, radius=0.5, color=color, make_trail=True, shininess=0, masa=m_alfa, vel=vel))
+    particulas.append(mod.Alpha(pos, vel, color, m_alfa, 0.5, "Alpha"))
 
 
 t,n=0,0
 
 # Funcion que da avance al escenario 2     
-def escenario2_avance(ejecutando:bool, dt): 
-    global particulas, t, n
-    
-    # particulas[0].evolucion_temporal(dt)
-    # particulas[1].evolucion_temporal(dt)
+def escenario2_avance(dt): 
+    global particulas, t, n, e, k, m_alfa
     
     for i in range(len(particulas)):
         
-        # actualizacion (por diferencias finitas)
-        pos_antigua_x, pos_antigua_y = particulas[i].pos.x, particulas[i].pos.y
-                
-        # avance de posicion 
-        particulas[i].pos.x += particulas[i].vel.x*dt
-        particulas[i].pos.y += particulas[i].vel.y*dt
-            
-        particulas[i].pos = vp.vector(particulas[i].pos.x, particulas[i].pos.y, 0)
-            
-        # avance de velocidades
-        particulas[i].vel.x += e**2 *k *dt *pos_antigua_x /(m_alfa*(pos_antigua_x**2+pos_antigua_y**2)**(3/2)) 
-        particulas[i].vel.y += e**2 *k *dt *pos_antigua_y /(m_alfa*(pos_antigua_x**2+pos_antigua_y**2)**(3/2)) 
-            
+        particulas[i].evolucion_temporal(dt, e, k , m_alfa)
+        
         # detiene el mov de la particula si pos en magnitud es > 10:
-        if(vp.mag(particulas[i].pos)>10):
-            particulas[i].vel = vp.vector(0, 0, 0)
+        if(vp.mag(particulas[i].posicion)>10):
+            particulas[i].velocidad = vp.vector(0, 0, 0)
             
         # crea y agrega nuevas particulas alpha al arreglo
         if(t>3):
             pos_y = np.random.random()-0.5     #parametro de impacto aleatorio
             pos = vp.vector(-8, pos_y, 0)
             vel = vp.vector(v,0,0)
-            particulas.append(vp.sphere(pos=pos, radius=0.5, color=color, make_trail=True, shininess=0, masa=m_alfa, vel=vel))
+            particulas.append(mod.Alpha(pos, vel, color, m_alfa, 0.5, "Alpha"))
             t=0
             n+=1
     t+=dt

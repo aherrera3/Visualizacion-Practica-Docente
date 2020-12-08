@@ -73,7 +73,6 @@ def Ejecutar(m):
         
     elif(evento == "Escenario2"):
         # corre programa: 
-        t = 0
         dt = 0.001
         
         mod_esc.escenario2_creacion()
@@ -82,17 +81,16 @@ def Ejecutar(m):
         
         while True:
             vp.rate(5000)
-            ejecutando = running
             
             if(running):
-                mod_esc.escenario2_avance(ejecutando,dt)
+                mod_esc.escenario2_avance(dt)
             if(mod_esc.n>30):
                 break
             
     elif(evento == "Escenario3"):    
+        dt = 0.001
         
         mod_esc.escenario3_creacion()
-        dt = 0.001
         
         vp.scene.caption = message[2]
         
