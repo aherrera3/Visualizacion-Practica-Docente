@@ -61,10 +61,14 @@ m_nucleo, color = 6.6e-15, vp.vector(0.1,1,0.7)
 
 t=0
 n=0
+e=1.602e-19
+k=8.987e9 *100
+
+theta = []
 
 # Funcion que crea las particulas del escenario 2
 def escenario2_creacion():
-    global particulas,t,n
+    global particulas,t,n,theta
     particulas.clear()
     t=0
     n=0
@@ -73,10 +77,16 @@ def escenario2_creacion():
        
     # arreglos para guardar las particulas alpha. Inicia con una particula
     particulas.append(mod.Alpha(pos, vel, vp.vector(0.5,1,0.7), m_alfa, 0.5, "Alpha"))
+    
+    interior = 2/ vp.atan( pos.y/(k*e**2) * m_alfa*vp.mag(vel)**2 )
+    theta.append( interior )
+    #print("theta0: ",theta)
 
-# Funcion que da avance al escenario 2     
+# Funcion que da avance al escenario 2   
+  
 def escenario2_avance(dt): 
-    global particulas, t, n
+    global particulas, t, n, theta
+    #f1 = vp.gdots(color=vp.color.cyan) # a graphics curve
     for i in range(len(particulas)):
         
         particulas[i].evolucion_temporal1(dt)
@@ -87,13 +97,34 @@ def escenario2_avance(dt):
             
         # crea y agrega nuevas particulas alpha al arreglo
         if(t>3):
+            #f1.plot(t,1)
             pos_y = np.random.random()-0.5     #parametro de impacto aleatorio
             pos = vp.vector(-8, pos_y, 0)
             vel = vp.vector(v,0,0)
             particulas.append(mod.Alpha(pos, vel, color, m_alfa, 0.5, "Alpha"))
+            
+            interior = 2/vp.atan( pos_y/(k*e**2) * m_alfa*vp.mag(vel)**2 )
+            theta.append( interior )
+            print("angulos son: ", theta) 
+            #print(len(theta))
             t=0
             n+=1
     t+=dt
+
+
+secciones=np.zeros(100)
+def discretizar_angulos(theta):
+    theta=np.abs(theta)
+    delta = 180/100           #1.8 grado ahora es 1 grado
+    
+    for i in range(len(theta)):
+        if(theta[i]<0): theta[i] = abs(theta[i])
+        
+        valor =  int(theta[i]//delta)   # entero
+        secciones[valor] = secciones[valor]+1
+     
+    return secciones    
+#print("discretizar angulos: ", discretizar_angulos(theta))    
  
 # Funcion que reinicia el escenario 2
 def escenario2_reiniciar():

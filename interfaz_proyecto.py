@@ -70,7 +70,7 @@ def Ejecutar(m):
         vp.scene.caption = message[1]
         
         while True:
-            vp.rate(5000)
+            vp.rate(8000)
             
             if(running):
                 mod_esc.escenario2_avance(dt)
