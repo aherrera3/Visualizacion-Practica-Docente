@@ -64,7 +64,7 @@ n=0
 
 # Funcion que crea las particulas del escenario 2
 def escenario2_creacion():
-    global particulas,t,n#, posiciones_iniales, velocidades_iniciales
+    global particulas,t,n
     particulas.clear()
     t=0
     n=0
@@ -95,7 +95,10 @@ def escenario2_avance(dt):
             n+=1
     t+=dt
  
-
+# Funcion que reinicia el escenario 2
+def escenario2_reiniciar():
+    limpiar_escenario()
+    escenario2_creacion()
      
 ##############################################################################
 # Escenario 3
@@ -159,3 +162,7 @@ def escenario3_avance(dt):
             t=0
     t+=dt
         
+# Funcion que reinicia el escenario 3
+def escenario3_reiniciar():
+    limpiar_escenario()
+    escenario3_creacion()

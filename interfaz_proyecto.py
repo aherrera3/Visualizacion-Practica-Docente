@@ -25,7 +25,9 @@ t = 0
 def Reset(r):
     global t
     t=0
-    mod_esc.escenario1_reiniciar()
+    if menu.selected=="Escenario1": mod_esc.escenario1_reiniciar()
+    elif menu.selected=="Escenario2": mod_esc.escenario2_reiniciar()
+    elif menu.selected=="Escenario3": mod_esc.escenario3_reiniciar()
     Ejecutar(menu)
 
 vp.button(text="Reset", pos=vp.scene.title_anchor, bind=Reset)    
