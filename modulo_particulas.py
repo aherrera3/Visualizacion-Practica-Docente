@@ -4,6 +4,9 @@ from abc import ABC, abstractmethod
 import vpython as vp
 #import numpy as np
 
+# constantes absolutas
+e=1.602e-19
+k=8.987e9
 
 ##############################################################################
 # Clase principal
@@ -61,8 +64,7 @@ class AntineutrinoElectronico(ParticulaFundamental):
 # Clase que representa a una particula alpha y hereda de ParticulaFundamental       
 class Alpha(ParticulaFundamental): 
     def evolucion_temporal1(self, dt):
-        e=1.602e-19
-        k=8.987e9
+        global e,k
         # actualizacion (por diferencias finitas)
         pos_antigua_x, pos_antigua_y = self.posicion.x, self.posicion.y
         

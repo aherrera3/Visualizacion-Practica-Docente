@@ -61,8 +61,7 @@ m_nucleo, color = 6.6e-15, vp.vector(0.1,1,0.7)
 
 t=0
 n=0
-e=1.602e-19
-k=8.987e9 *100
+k,e=mod.k,mod.e
 
 theta = []
 
@@ -111,9 +110,21 @@ def escenario2_avance(dt):
             n+=1
     t+=dt
 
+import numpy as np
+theta = [1.5387551139222004, -1.6724617793552317, -8.836827674329644,
+         60.03414324074519, 1.6409927223139116, -1.55856538913673, 
+         2.945731636791351, -1.6089658339948623, -2.331830001086867,
+         5.19311372811911, 1.5854349236843959, -2.289364383521525,
+         -3.47566482972552, -1.574919600691814, 3.4597592440368223,
+         1.6205752204885029, -1.5771257861450048, -2.0046151701832744,
+         2.1644759283159276, 1.6534729826578518, 1.554628910813631, 
+         -19.138090140942047, 1.5420664586270714, -1.6323007976718495,
+         -4.9134141054439375, 1.562874229458306, 1.9084291563587101, 
+         -1.8084729269947921, 1.5403175828939701, -1.5423236639497064,
+         1.7276450756713093, 1.578523055686462]
 
 secciones=np.zeros(100)
-def discretizar_angulos(theta):
+def discretizar_angulos(theta)->np.ndarray:
     theta=np.abs(theta)
     delta = 180/100           #1.8 grado ahora es 1 grado
     
@@ -124,8 +135,11 @@ def discretizar_angulos(theta):
         secciones[valor] = secciones[valor]+1
      
     return secciones    
-#print("discretizar angulos: ", discretizar_angulos(theta))    
+print("discretizar angulos: ", discretizar_angulos(theta))    
  
+
+
+
 # Funcion que reinicia el escenario 2
 def escenario2_reiniciar():
     limpiar_escenario()

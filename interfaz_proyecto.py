@@ -26,7 +26,9 @@ def Reset(r):
     global t
     t=0
     if menu.selected=="Escenario1": mod_esc.escenario1_reiniciar()
-    elif menu.selected=="Escenario2": mod_esc.escenario2_reiniciar()
+    elif menu.selected=="Escenario2": 
+        mod_esc.escenario2_reiniciar()
+        mod_esc.theta.clear()
     elif menu.selected=="Escenario3": mod_esc.escenario3_reiniciar()
     Ejecutar(menu)
 
@@ -78,14 +80,14 @@ def Ejecutar(m):
                 break
             
     elif(evento == "Escenario3"):    
-        dt = 0.001
+        dt = 0.0001
         
         mod_esc.escenario3_creacion()
         
         vp.scene.caption = message[2]
         
         while True:
-            vp.rate(12000)
+            vp.rate(30000)
             try:
                 if (running):
                     mod_esc.escenario3_avance(dt)
