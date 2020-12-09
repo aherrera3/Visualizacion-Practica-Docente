@@ -19,28 +19,22 @@ def Run(b):
     if running: b.text = "Pause"
     else: b.text = "Run"
 
-beginButton = vp.button(text="Run", pos=vp.scene.title_anchor, bind=Run)    
+vp.button(text="Run", pos=vp.scene.title_anchor, bind=Run)    
 
+t = 0
 def Reset(r):
-    pass
-    #global running, evento, seOprimioReset
-    #mod_esc.escenario1_reiniciar()
-    
-    #seOprimioReset = True
-    #if(running==True):       # si se para mientras está corriendo
-    #    Ejecutar(evento)
-        
-    #estado_inicial()
-    # para y reinicia la operacion anterior
+    global t
+    t=0
+    mod_esc.escenario1_reiniciar()
+    Ejecutar(menu)
 
-resetButton = vp.button(text="Reset", pos=vp.scene.title_anchor, bind=Reset)    
+vp.button(text="Reset", pos=vp.scene.title_anchor, bind=Reset)    
 
 
 ##############
 def Ejecutar(m):
-    global seOprimioReset, evento
+    global seOprimioReset, evento, t
     
-    #if(seOprimioReset==False):
     mod_esc.limpiar_escenario()
         
     # captura el evento   
@@ -53,7 +47,6 @@ def Ejecutar(m):
         
         vp.scene.caption = message[0]
         
-        #if(seOprimioReset==False):
         mod_esc.escenario1_creacion()
         
         while True:
@@ -65,11 +58,6 @@ def Ejecutar(m):
                 t+=dt
             if t>10:
                 break
-            
-        #if(seOprimioReset):
-            #seOprimioReset = False
-            #Ejecutar(m)
-            
         
     elif(evento == "Escenario2"):
         # corre programa: 
@@ -109,7 +97,7 @@ vp.wtext(pos=vp.scene.title_anchor, text="                                      
 
 # Menu de eleccion de escenarios
 #    Llama a la funcion Ejecutar(m) y ejecuta el escenario con el evento m correspondiente
-vp.menu(choices=["Elige un experimento", "Escenario1", "Escenario2", "Escenario3", "Escenario4"], index=0, pos=vp.scene.title_anchor, bind=Ejecutar)
+menu=vp.menu(choices=["Elige un experimento", "Escenario1", "Escenario2", "Escenario3", "Escenario4"], index=0, pos=vp.scene.title_anchor, bind=Ejecutar)
 
 
 message = ['''\n Experimento demostrativo 1 ...

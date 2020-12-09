@@ -44,7 +44,8 @@ class ParticulaFundamental(Particula, ABC):
     def reiniciar(self, pos_ini, vel_ini):
         self.posicion = pos_ini
         self.esfera.pos = self.posicion
-        self.velocidad=vel_ini    
+        self.velocidad = vel_ini    
+        self.esfera.vel = self.velocidad
         if self.esfera.make_trail:
             self.esfera.clear_trail()
 
@@ -80,6 +81,9 @@ class Alpha(ParticulaFundamental):
         self.velocidad = vp.vector(self.velocidad.x, self.velocidad.y, 0)
       
         self.esfera.velocidad=self.velocidad      
+        
+    def actualizarVelocidad(self, nuevaVelocidad):
+        self.velocidad = nuevaVelocidad
         
         
     

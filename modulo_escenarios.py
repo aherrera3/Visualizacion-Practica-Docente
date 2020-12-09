@@ -20,11 +20,6 @@ def limpiar_escenario():
 # Escenario 1: Efecto fotoelectrico
 ##############################################################################
 
-# Arreglo de velocidades y posiciones iniciales. Primera posicion para electron, segunda para antineutrino electronico
-#posiciones_iniales = [vp.vector(-15,0,0), vp.vector(5,0,0)]
-#velocidades_iniciales = [vp.vector(1,0,0), vp.vector(1,0,0)]
-
-
 # Funcion que crea las particulas del escenario 1
 def escenario1_creacion():
     global particulas
@@ -43,26 +38,20 @@ def escenario1_avance(ejecutando:bool, dt):    # funciona bien
         # evolucion del sistema  
         particulas[0].evolucion_temporal(dt)
         particulas[1].evolucion_temporal(dt)  
-        print("escenario1_avance",particulas)
         
 # Funcion que reinicia el escenario
 def escenario1_reiniciar():
-    #global particulas
-    #particulas[0].reiniciar(posiciones_iniales[0], velocidades_iniciales[1])
-    #particulas[1].reiniciar(posiciones_iniales[1], velocidades_iniciales[1])        
-    
-    limpiar_escenario()
-    escenario1_creacion() 
+    global particulas
+    particulas[0].reiniciar(vp.vector(-15,0,0), vp.vector(1,0,0))
+    particulas[1].reiniciar(vp.vector(5,0,0), vp.vector(1,0,0))       
         
 
 ##############################################################################
 # Escenario 2: Scattering de partículas alfa
 ##############################################################################    
-# Funcion que crea las particulas del escenario 2
-
-m_alfa=6.64e-27
 
 # alpha
+m_alfa=6.64e-27
 pos = vp.vector(-8,0.5,0)
 v = 5
 vel = vp.vector(v,0,0)   #cte
@@ -73,6 +62,7 @@ m_nucleo, color = 6.6e-15, vp.vector(0.1,1,0.7)
 t=0
 n=0
 
+# Funcion que crea las particulas del escenario 2
 def escenario2_creacion():
     global particulas,t,n#, posiciones_iniales, velocidades_iniciales
     particulas.clear()
