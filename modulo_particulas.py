@@ -4,9 +4,9 @@ from abc import ABC, abstractmethod
 import vpython as vp
 #import numpy as np
 
-# constantes absolutas
+# constantes globales
 e=1.602e-19
-k=8.987e9
+k=8.987e9*100
 
 ##############################################################################
 # Clase principal

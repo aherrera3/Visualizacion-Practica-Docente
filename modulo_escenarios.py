@@ -69,6 +69,8 @@ theta = []
 def escenario2_creacion():
     global particulas,t,n,theta
     particulas.clear()
+    theta.clear()
+    
     t=0
     n=0
     # se crea el nucleo
@@ -82,7 +84,6 @@ def escenario2_creacion():
     #print("theta0: ",theta)
 
 # Funcion que da avance al escenario 2   
-  
 def escenario2_avance(dt): 
     global particulas, t, n, theta
     #f1 = vp.gdots(color=vp.color.cyan) # a graphics curve
@@ -123,6 +124,7 @@ theta = [1.5387551139222004, -1.6724617793552317, -8.836827674329644,
          -1.8084729269947921, 1.5403175828939701, -1.5423236639497064,
          1.7276450756713093, 1.578523055686462]
 
+
 secciones=np.zeros(100)
 def discretizar_angulos(theta)->np.ndarray:
     theta=np.abs(theta)
@@ -135,9 +137,20 @@ def discretizar_angulos(theta)->np.ndarray:
         secciones[valor] = secciones[valor]+1
      
     return secciones    
-print("discretizar angulos: ", discretizar_angulos(theta))    
+y = discretizar_angulos(theta)
+print("discretizar angulos: ", y)    
  
 
+def grafica_rutherford(y):
+    import matplotlib.pyplot as plt
+    plt.figure()
+    print("valores de y: ",y)
+    ind = np.where(y>0)
+    x = np.arange(100)
+    print("valores de y[ind]:",y[ind])
+    plt.scatter(x[ind],y[ind])
+    
+grafica_rutherford(y)    
 
 
 # Funcion que reinicia el escenario 2

@@ -26,9 +26,7 @@ def Reset(r):
     global t
     t=0
     if menu.selected=="Escenario1": mod_esc.escenario1_reiniciar()
-    elif menu.selected=="Escenario2": 
-        mod_esc.escenario2_reiniciar()
-        mod_esc.theta.clear()
+    elif menu.selected=="Escenario2": mod_esc.escenario2_reiniciar()
     elif menu.selected=="Escenario3": mod_esc.escenario3_reiniciar()
     Ejecutar(menu)
 
