@@ -24,12 +24,9 @@ def limpiar_escenario():
 def escenario1_creacion():
     global particulas
     particulas.clear()
-    # creacion de objetos:
-    e1 = mod.Electron(vp.vector(-15,0,0), vp.vector(1,0,0), vp.vector(0.1,1,0.7), 0.0005, 1, "electron") 
-    an1 = mod.AntineutrinoElectronico(vp.vector(5,0,0), vp.vector(1,0,0), vp.vector(0.8,0.5,0.3), 0.00001, 0.5, "antineutrino")  
-    
-    particulas.append(e1)
-    particulas.append(an1)
+    # creacion de objetos y añadir objetos:
+    particulas.append(mod.Electron(vp.vector(-15,0,0), vp.vector(1,0,0), vp.vector(0.1,1,0.7), 0.0005, 1, "electron") )
+    particulas.append(mod.AntineutrinoElectronico(vp.vector(5,0,0), vp.vector(1,0,0), vp.vector(0.8,0.5,0.3), 0.00001, 0.5, "antineutrino")  )
     
 # Funcion que da avance al escenario 1     
 def escenario1_avance(ejecutando:bool, dt):    # funciona bien
@@ -39,7 +36,7 @@ def escenario1_avance(ejecutando:bool, dt):    # funciona bien
         particulas[0].evolucion_temporal(dt)
         particulas[1].evolucion_temporal(dt)  
         
-# Funcion que reinicia el escenario
+# Funcion que reinicia el escenario 1
 def escenario1_reiniciar():
     global particulas
     particulas[0].reiniciar(vp.vector(-15,0,0), vp.vector(1,0,0))
@@ -52,17 +49,14 @@ def escenario1_reiniciar():
 
 # alpha
 m_alfa=6.64e-27
-pos = vp.vector(-8,0.5,0)
 v = 5
-vel = vp.vector(v,0,0)   #cte
-
+pos,vel = vp.vector(-8,0.5,0),vp.vector(v,0,0)   #cte
 # nucleo
 m_nucleo, color = 6.6e-15, vp.vector(0.1,1,0.7)
-
-t=0
-n=0
+# ctes
+t,n=0,0
 k,e=mod.k,mod.e
-
+# arreglo con la cantidad de particulas por angulo
 theta = []
 
 # Funcion que crea las particulas del escenario 2
@@ -74,14 +68,13 @@ def escenario2_creacion():
     t=0
     n=0
     # se crea el nucleo
-    vp.sphere(pos=vp.vector(0,0,0), radius=0.5, color=color, make_trail=True, shininess=0, masa=m_nucleo, velocidad=vp.vector(0,0,0))
-       
+    vp.sphere(pos=vp.vector(0,0,0), radius=0.5, color=color, make_trail=True, shininess=0, masa=m_nucleo, velocidad=vp.vector(0,0,0)) 
     # arreglos para guardar las particulas alpha. Inicia con una particula
     particulas.append(mod.Alpha(pos, vel, vp.vector(0.5,1,0.7), m_alfa, 0.5, "Alpha"))
+    # se añade el primer angulo
     
-    interior = 2/ vp.atan( pos.y/(k*e**2) * m_alfa*vp.mag(vel)**2 )
-    theta.append( interior )
-    #print("theta0: ",theta)
+    #theta.append( 2/ vp.atan( pos.y/(k*e**2) * m_alfa*vp.mag(vel)**2 ) )
+    print("theta0:", theta)
 
 # Funcion que da avance al escenario 2   
 def escenario2_avance(dt): 
@@ -91,9 +84,14 @@ def escenario2_avance(dt):
         
         particulas[i].evolucion_temporal1(dt)
         
+        entro = False
         # detiene el mov de la particula si pos en magnitud es > 10:
-        if(vp.mag(particulas[i].posicion)>10):
+        if(vp.mag(particulas[i].posicion)>10 and not entro):
+            theta.append(vp.atan(particulas[i].posicion.y/particulas[i].posicion.x))
+            print("a ", theta)
             particulas[i].velocidad = vp.vector(0, 0, 0)
+            entro = True
+            #particulas.pop(i)
             
         # crea y agrega nuevas particulas alpha al arreglo
         if(t>3):
@@ -101,16 +99,14 @@ def escenario2_avance(dt):
             pos_y = np.random.random()-0.5     #parametro de impacto aleatorio
             pos = vp.vector(-8, pos_y, 0)
             vel = vp.vector(v,0,0)
-            particulas.append(mod.Alpha(pos, vel, color, m_alfa, 0.5, "Alpha"))
-            
-            interior = 2/vp.atan( pos_y/(k*e**2) * m_alfa*vp.mag(vel)**2 )
-            theta.append( interior )
-            print("angulos son: ", theta) 
-            #print(len(theta))
+            particulas.append(mod.Alpha(pos, vel, color, m_alfa, 0.5, "Alpha"))        
+            #theta.append( 2/vp.atan( pos_y/(k*e**2) * m_alfa*vp.mag(vel)**2 ) )
+            #print("angulos actuales: ", theta) 
             t=0
             n+=1
     t+=dt
 
+"""
 import numpy as np
 theta = [1.5387551139222004, -1.6724617793552317, -8.836827674329644,
          60.03414324074519, 1.6409927223139116, -1.55856538913673, 
@@ -151,7 +147,7 @@ def grafica_rutherford(y):
     plt.scatter(x[ind],y[ind])
     
 grafica_rutherford(y)    
-
+"""
 
 # Funcion que reinicia el escenario 2
 def escenario2_reiniciar():

@@ -10,8 +10,6 @@ vp.scene.height = 600
 
 # BOTONES
 running = False
-seOprimioReset = False
-evento = ""
 
 def Run(b):
     global running
@@ -35,7 +33,7 @@ vp.button(text="Reset", pos=vp.scene.title_anchor, bind=Reset)
 
 ##############
 def Ejecutar(m):
-    global seOprimioReset, evento, t
+    global t
     
     mod_esc.limpiar_escenario()
         
@@ -47,9 +45,8 @@ def Ejecutar(m):
         t = 0
         dt = 0.001
         
-        vp.scene.caption = message[0]
-        
         mod_esc.escenario1_creacion()
+        vp.scene.caption = message[0]
         
         while True:
             vp.rate(12000)
@@ -62,26 +59,24 @@ def Ejecutar(m):
                 break
         
     elif(evento == "Escenario2"):
-        # corre programa: 
         dt = 0.001
         
         mod_esc.escenario2_creacion()
-        
         vp.scene.caption = message[1]
         
         while True:
-            vp.rate(8000)
+            vp.rate(5000)
             
             if(running):
                 mod_esc.escenario2_avance(dt)
             if(mod_esc.n>30):
+                print(mod_esc.n)    
                 break
             
     elif(evento == "Escenario3"):    
         dt = 0.0001
         
         mod_esc.escenario3_creacion()
-        
         vp.scene.caption = message[2]
         
         while True:
@@ -110,8 +105,6 @@ message = ['''\n Experimento demostrativo 1 ...
         Scattering de Compton ...
         Otralinea ...''', '''\n Experimento demostrativo 4 ...
         Decaimiento beta negativo ...
-        Otralinea ...''', '''\n Experimento demostrativo 5 ...
-        otra linea ...
         Otralinea ...''']
 
 #vp.scene.caption = '''\n Experimentos demostrativos ...

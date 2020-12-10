@@ -6,8 +6,7 @@ import vpython as vp
 
 # constantes globales
 e=1.602e-19
-k=8.987e9*100
-
+k=8.987e9*10
 ##############################################################################
 # Clase principal
 ##############################################################################
@@ -64,7 +63,6 @@ class AntineutrinoElectronico(ParticulaFundamental):
 # Clase que representa a una particula alpha y hereda de ParticulaFundamental       
 class Alpha(ParticulaFundamental): 
     def evolucion_temporal1(self, dt):
-        global e,k
         # actualizacion (por diferencias finitas)
         pos_antigua_x, pos_antigua_y = self.posicion.x, self.posicion.y
         
