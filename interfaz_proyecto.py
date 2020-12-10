@@ -36,7 +36,7 @@ def Ejecutar(m):
     global t
     
     mod_esc.limpiar_escenario()
-        
+    
     # captura el evento   
     evento = m.selected    
     
@@ -44,10 +44,18 @@ def Ejecutar(m):
         # corre programa: 
         t = 0
         dt = 0.001
-        
+        vp.scene.userzoom = False # no puede hacer zoom
+        vp.scene.userspin = False # no puede girar la escena
+        vp.scene.pan = False #no puede mover la escena 
+        print(vp.scene.camera.pos)
+        vp.scene.camera.pos=vp.vector(0, 0, 17.3205)
+
         mod_esc.escenario1_creacion()
         vp.scene.caption = message[0]
-        
+
+        #vp.scene.camera.pos=vp.vector(0,20,-10)
+        print(vp.scene.camera.pos)
+        """
         while True:
             vp.rate(12000)
             ejecutando = running
@@ -57,7 +65,7 @@ def Ejecutar(m):
                 t+=dt
             if t>10:
                 break
-        
+        """
     elif(evento == "Escenario2"):
         dt = 0.001
         

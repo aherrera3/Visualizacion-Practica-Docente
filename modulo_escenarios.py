@@ -25,8 +25,23 @@ def escenario1_creacion():
     global particulas
     particulas.clear()
     # creacion de objetos y añadir objetos:
-    particulas.append(mod.Electron(vp.vector(-15,0,0), vp.vector(1,0,0), vp.vector(0.1,1,0.7), 0.0005, 1, "electron") )
-    particulas.append(mod.AntineutrinoElectronico(vp.vector(5,0,0), vp.vector(1,0,0), vp.vector(0.8,0.5,0.3), 0.00001, 0.5, "antineutrino")  )
+    #particulas.append(mod.Electron(vp.vector(-15,0,0), vp.vector(1,0,0), vp.vector(0.1,1,0.7), 0.0005, 1, "electron") )
+    #particulas.append(mod.AntineutrinoElectronico(vp.vector(5,0,0), vp.vector(1,0,0), vp.vector(0.8,0.5,0.3), 0.00001, 0.5, "antineutrino")  )
+    particulas_fermionicas=[
+        [],
+        [],
+        []
+    ]
+    for i in range(len(particulas_fermionicas)):
+        for k in range(4):
+            particulas_fermionicas[i].append(vp.sphere(pos=vp.vector(k*10,20-(i*10),0),radius=2))
+    particulas_bosonicas= [
+        [],
+        []
+    ]
+    for i in range(len(particulas_bosonicas)):
+        for k in range(2):
+            particulas_bosonicas[i].append(vp.sphere(pos=vp.vector(60+k*10,20-(i*10),0),radius=2,color =vp.color.red))
     
 # Funcion que da avance al escenario 1     
 def escenario1_avance(ejecutando:bool, dt):    # funciona bien
