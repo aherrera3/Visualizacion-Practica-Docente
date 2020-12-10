@@ -70,11 +70,11 @@ def escenario2_creacion():
     # se crea el nucleo
     vp.sphere(pos=vp.vector(0,0,0), radius=0.5, color=color, make_trail=True, shininess=0, masa=m_nucleo, velocidad=vp.vector(0,0,0)) 
     # arreglos para guardar las particulas alpha. Inicia con una particula
-    particulas.append(mod.Alpha(pos, vel, vp.vector(0.5,1,0.7), m_alfa, 0.5, "Alpha"))
+    particulas.append([mod.Alpha(pos, vel, vp.vector(0.5,1,0.7), m_alfa, 0.5, "Alpha"), True]) #booleano determina si la particula se mueve o no
     # se añade el primer angulo
     
     #theta.append( 2/ vp.atan( pos.y/(k*e**2) * m_alfa*vp.mag(vel)**2 ) )
-    print("theta0:", theta)
+    #print("theta0:", theta)
 
 # Funcion que da avance al escenario 2   
 def escenario2_avance(dt): 
@@ -82,24 +82,22 @@ def escenario2_avance(dt):
     #f1 = vp.gdots(color=vp.color.cyan) # a graphics curve
     for i in range(len(particulas)):
         
-        particulas[i].evolucion_temporal1(dt)
-        
-        entro = False
+        if particulas[i][1]:
+            particulas[i][0].evolucion_temporal1(dt)      
         # detiene el mov de la particula si pos en magnitud es > 10:
-        if(vp.mag(particulas[i].posicion)>10 and not entro):
-            theta.append(vp.atan(particulas[i].posicion.y/particulas[i].posicion.x))
-            print("a ", theta)
-            particulas[i].velocidad = vp.vector(0, 0, 0)
-            entro = True
-            #particulas.pop(i)
-            
+            if(vp.mag(particulas[i][0].posicion)>10 and particulas[i][1]):
+                theta.append(vp.atan(particulas[i][0].posicion.y/particulas[i][0].posicion.x)*360/(2*np.pi))
+                print("a ", theta)
+                particulas[i][0].velocidad = vp.vector(0, 0, 0)
+                particulas[i][1]=False
+
         # crea y agrega nuevas particulas alpha al arreglo
         if(t>3):
             #f1.plot(t,1)
             pos_y = np.random.random()-0.5     #parametro de impacto aleatorio
             pos = vp.vector(-8, pos_y, 0)
             vel = vp.vector(v,0,0)
-            particulas.append(mod.Alpha(pos, vel, color, m_alfa, 0.5, "Alpha"))        
+            particulas.append([mod.Alpha(pos, vel, color, m_alfa, 0.5, "Alpha"),True])        
             #theta.append( 2/vp.atan( pos_y/(k*e**2) * m_alfa*vp.mag(vel)**2 ) )
             #print("angulos actuales: ", theta) 
             t=0
