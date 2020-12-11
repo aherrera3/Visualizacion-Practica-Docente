@@ -30,8 +30,44 @@ def Reset(r):
 
 vp.button(text="Reset", pos=vp.scene.title_anchor, bind=Reset)    
 
+particula_enfocada=False
+def mover_camara(posicion_nueva):
+    global particula_enfocada
+    pos_actual=vp.scene.camera.pos
+    pos_original=vp.vector(30, 10, 17.3205)
+    if particula_enfocada:
+        distancia = pos_original - pos_actual
+    else:
+        distancia = posicion_nueva - pos_actual
+    distancia_x = distancia.x
+    distancia_y = distancia.y
+    distancia_z = distancia.z
+    pasos=50
+    dx=distancia_x/pasos
+    dy=distancia_y/pasos
+    dz=distancia_z/pasos
+    n=0
+    while True:
+        vp.rate(50)
+        vp.scene.camera.pos=vp.scene.camera.pos + vp.vector(dx,dy,dz)
+        n+=1
+        if n==50:
+            break
+    particula_enfocada= ~particula_enfocada
+def getevent():
+    hit = vp.scene.mouse.pick #selecciona cualquie objeto
+    #vp.scene.camera.pos=hit.pos
+    #print(hit.pos)
+    global particula_enfocada
+    zoom=vp.vector(0,0,29)
+    try:
+        mover_camara(hit.pos-zoom)
+    except:
+        mover_camara(vp.vector(30, 10, 17.3205))
 
 ##############
+
+
 def Ejecutar(m):
     global t
     
@@ -42,13 +78,14 @@ def Ejecutar(m):
     
     if(evento == "Escenario1"):
         # corre programa: 
+        vp.scene.bind("mousedown", getevent) #define lo que sucede si se hace clik
         t = 0
         dt = 0.001
         vp.scene.userzoom = False # no puede hacer zoom
         vp.scene.userspin = False # no puede girar la escena
         vp.scene.pan = False #no puede mover la escena 
         print(vp.scene.camera.pos)
-        vp.scene.camera.pos=vp.vector(0, 0, 17.3205)
+        vp.scene.camera.pos=vp.vector(30, 10, 17.3205)
 
         mod_esc.escenario1_creacion()
         vp.scene.caption = message[0]
