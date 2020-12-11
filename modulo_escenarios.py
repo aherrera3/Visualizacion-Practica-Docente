@@ -1,4 +1,5 @@
 ## Archivo para crear los escenarios del programa
+# -*- coding: utf-8 -*-
 
 import vpython as vp
 import modulo_particulas as mod
@@ -63,6 +64,23 @@ def escenario1_reiniciar():
     particulas[1].reiniciar(vp.vector(5,0,0), vp.vector(1,0,0))       
         
 
+def dar_mensaje_escenario1(identificador: str)->str:
+    mensaje=""
+    if identificador=="bosones:0,0":
+        mensaje="              "+'<img src="imagenes/bosonZ.png" width=400 height=250>'+"            "+'<img src="imagenes/bosonesZyWDescubrimiento.png" width=400 height=250>'+"\n\n\n"+ "                                           "+" Mas información en: "+ '<a href="https://home.cern/science/physics/z-boson" target="_blank">The Z boson | CERN (home.cern)</a>'+"\n"
+    elif identificador=="bosones:0,1":
+        mensaje="              "+'<img src="imagenes/bosonesW.png" width=400 height=250>'+"            "+'<img src="imagenes/bosonesZyWDescubrimiento.png" width=400 height=250>'+"\n\n\n"+ "                                           "+" Mas información en: "+ '<a href="https://home.cern/science/physics/w-boson-sunshine-and-stardust" target="_blank">W boson: Sunshine and stardust | CERN (home.cern)</a>'+"\n"
+    #elif identificador=="fermiones:0,2" 
+    
+    #elif identificador=="fermiones:0,3" 
+    
+    #elif identificador=="fermiones:0,4"     
+    
+    #elif identificador=="fermiones:1,1"
+    
+    return mensaje
+
+#print(dar_mensaje_escenario1("bosones:0,0"))
 ##############################################################################
 # Escenario 2: Scattering de partículas alfa
 ##############################################################################    
