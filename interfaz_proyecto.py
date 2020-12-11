@@ -54,6 +54,7 @@ def mover_camara(posicion_nueva):
         if n==50:
             break
     particula_enfocada= ~particula_enfocada
+
 def getevent():
     hit = vp.scene.mouse.pick #selecciona cualquie objeto
     #vp.scene.camera.pos=hit.pos
@@ -64,8 +65,6 @@ def getevent():
         mover_camara(hit.pos-zoom)
     except:
         mover_camara(vp.vector(30, 10, 17.3205))
-
-
 
 def Ejecutar(m):
     global t

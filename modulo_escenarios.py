@@ -16,6 +16,13 @@ def limpiar_escenario():
     global particulas
     particulas.clear()
         
+    
+# Para escenario 2 y 3
+datos = np.loadtxt("longitudes_de_onda.csv", dtype=int)    #datos de longitudes de ondas
+conversion = {}
+for i in datos:
+    conversion[str(i[0])] = (i[1]/255, i[2]/255, i[3]/255)    
+    
 ##############################################################################
 # Escenario 1: Efecto fotoelectrico
 ##############################################################################
@@ -25,8 +32,6 @@ def escenario1_creacion():
     global particulas
     particulas.clear()
     # creacion de objetos y añadir objetos:
-    #particulas.append(mod.Electron(vp.vector(-15,0,0), vp.vector(1,0,0), vp.vector(0.1,1,0.7), 0.0005, 1, "electron") )
-    #particulas.append(mod.AntineutrinoElectronico(vp.vector(5,0,0), vp.vector(1,0,0), vp.vector(0.8,0.5,0.3), 0.00001, 0.5, "antineutrino")  )
     particulas_fermionicas=[
         [],
         [],
@@ -82,10 +87,10 @@ def escenario2_creacion():
     
     t=0
     n=0
-    # se crea el nucleo
+    # se crea el nucleo en el centro
     vp.sphere(pos=vp.vector(0,0,0), radius=0.5, color=color, make_trail=True, shininess=0, masa=m_nucleo, velocidad=vp.vector(0,0,0)) 
     # arreglos para guardar las particulas alpha. Inicia con una particula
-    particulas.append([mod.Alpha(pos, vel, vp.vector(0.5,1,0.7), m_alfa, 0.5, "Alpha"), True]) #booleano determina si la particula se mueve o no
+    particulas.append([mod.Alpha(pos, vel, m_alfa, 0.5, "Alpha", conversion), True]) #booleano determina si la particula se mueve o no
     # se añade el primer angulo
     
     #theta.append( 2/ vp.atan( pos.y/(k*e**2) * m_alfa*vp.mag(vel)**2 ) )
@@ -94,25 +99,30 @@ def escenario2_creacion():
 # Funcion que da avance al escenario 2   
 def escenario2_avance(dt): 
     global particulas, t, n, theta
-    #f1 = vp.gdots(color=vp.color.cyan) # a graphics curve
     for i in range(len(particulas)):
-        
+        # si las particulas se están moviendo
         if particulas[i][1]:
             particulas[i][0].evolucion_temporal1(dt)      
-        # detiene el mov de la particula si pos en magnitud es > 10:
+            # detiene el mov de la particula si pos en magnitud es > 10:
             if(vp.mag(particulas[i][0].posicion)>10 and particulas[i][1]):
                 theta.append(vp.atan(particulas[i][0].posicion.y/particulas[i][0].posicion.x)*360/(2*np.pi))
                 print("a ", theta)
                 particulas[i][0].velocidad = vp.vector(0, 0, 0)
                 particulas[i][1]=False
-
+                
+            # cambia de color cuando pase por el valor en x=0 
+            if(round(particulas[i][0].posicion.x, 0) == 0):
+                theta_r = 2/vp.atan(particulas[i][0].posicion.y/(k*e**2) * m_alfa*vp.mag(particulas[i][0].velocidad)**2) #usando parametro de impacto teorico para poner el color
+                l_nueva=theta_a_wl(theta_r*360/(2*np.pi))
+                particulas[i][0].cambiarColor(l_nueva)
+                
         # crea y agrega nuevas particulas alpha al arreglo
         if(t>3):
-            #f1.plot(t,1)
             pos_y = np.random.random()-0.5     #parametro de impacto aleatorio
             pos = vp.vector(-8, pos_y, 0)
             vel = vp.vector(v,0,0)
-            particulas.append([mod.Alpha(pos, vel, color, m_alfa, 0.5, "Alpha"),True])        
+            particulas.append([mod.Alpha(pos, vel, m_alfa, 0.5, "Alpha", conversion),True])        
+            
             #theta.append( 2/vp.atan( pos_y/(k*e**2) * m_alfa*vp.mag(vel)**2 ) )
             #print("angulos actuales: ", theta) 
             t=0
@@ -171,11 +181,6 @@ def escenario2_reiniciar():
 # Escenario 3
 ##############################################################################    
 
-datos = np.loadtxt("longitudes_de_onda.csv", dtype=int)    #datos de longitudes de ondas
-conversion = {}
-for i in datos:
-    conversion[str(i[0])] = (i[1]/255, i[2]/255, i[3]/255)
-
 t = 0 #variables globales usadas en los metodos.
 n = 0
 
@@ -187,25 +192,27 @@ def escenario3_creacion():
     t=0
     n=0
     # Creacion de objetos:
-    #Se asigna un booleano para saber si la particula se encuentra antes del choque (True)
-    #o despues del choque (False)
+    #Se asigna un booleano para saber si la particula se encuentra antes del choque (True) o despues del choque (False)
     particulas.append([ mod.Photon(vp.vector(4, 0, 0), vp.vector(0, 0, 0), 380, conversion), True ])
 
-def choque(foton: object): #choque de un foton, cambia longitud de onda.
+def theta_a_wl(theta:float)->float:
+    return round(380+(199*(1-np.cos(theta))), 0)
+
+def choque(foton: object)->list: #choque de un foton, cambia longitud de onda.
     v = vp.mag(foton.velocidad)
     theta = np.random.random()*np.pi*2
     phi = np.arccos(np.random.random()*2-1)
     vx = v*np.sin(theta)*np.cos(phi)
     vy = v*np.sin(theta)*np.sin(phi)
     vz = v*np.cos(theta)
-    wave_lenghtf = round(380+(199*(1-np.cos(theta))), 0)
+    wave_lenghtf = theta_a_wl(theta)
     #retorna la direción de la velocidad nueva y la longitud de onda nueva
     return vp.vector(vx, vy, vz), wave_lenghtf 
 
 def escenario3_avance(dt):
     global particulas, t, n, conversion
     for i in range(len(particulas)):
-        #verifica si la particula esta en el punto de choque
+        # Verifica si la particula esta en el punto de choque
         if round(particulas[i][0].posicion.x, 0) == 10 and particulas[i][1]: 
             #genera el choque
             velocidad_nueva, l_nueva = choque(particulas[i][0])
