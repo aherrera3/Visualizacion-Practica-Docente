@@ -91,7 +91,8 @@ def Ejecutar(m):
         vp.scene.camera.pos=vp.vector(30, 10, 17.3205)
 
         mod_esc.escenario1_creacion()
-        vp.scene.caption = message[0]
+        #vp.scene.caption = message[0]
+        vp.scene.caption=mensaje()
 
         #vp.scene.camera.pos=vp.vector(0,20,-10)
         print(vp.scene.camera.pos)
@@ -132,18 +133,20 @@ vp.wtext(pos=vp.scene.title_anchor, text="                                      
 
 # Menu de eleccion de escenarios
 #    Llama a la funcion Ejecutar(m) y ejecuta el escenario con el evento m correspondiente
-menu=vp.menu(choices=["Elige un experimento", "Escenario1", "Escenario2", "Escenario3", "Escenario4"], index=0, pos=vp.scene.title_anchor, bind=Ejecutar)
+menu=vp.menu(choices=["Elige un escenario", "Escenario1", "Escenario2", "Escenario3"], index=0, pos=vp.scene.title_anchor, bind=Ejecutar)
 
 
-message = ['''\n Experimento demostrativo 1 ...
-        Efecto Fotoeléctrico ...
-        Otralinea ...''', '''\n Experimento demostrativo 2 ...
-        Scattering de Partículas alpha...
-        Otralinea ...''', '''\n Experimento demostrativo 3 ...
-        Scattering de Compton ...
-        Otralinea ...''', '''\n Experimento demostrativo 4 ...
-        Decaimiento beta negativo ...
+message = ['''\n Caraterísticas de partículas fundamentales
+           ''', '''\n Scattering de Partículas alpha...
+        Otralinea ...''', '''\n Scattering de Compton ...
         Otralinea ...''']
+        
+def mensaje():
+    global message, particula_enfocada
+    if(particula_enfocada):
+        message[0].append("img bosonZ = 'bosonZ.png'")
+        
+        
 
 #vp.scene.caption = '''\n Experimentos demostrativos ...
 #otra linea ...
