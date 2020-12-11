@@ -59,10 +59,16 @@ def getevent():
     hit = vp.scene.mouse.pick #selecciona cualquie objeto
     #vp.scene.camera.pos=hit.pos
     #print(hit.pos)
+    
     global particula_enfocada
+    
     zoom=vp.vector(0,0,29)
     try:
+        if particula_enfocada == False:
+            identificador=hit.iden
+            print(identificador)
         mover_camara(hit.pos-zoom)
+        
     except:
         mover_camara(vp.vector(30, 10, 17.3205))
 

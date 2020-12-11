@@ -39,14 +39,14 @@ def escenario1_creacion():
     ]
     for i in range(len(particulas_fermionicas)):
         for k in range(4):
-            particulas_fermionicas[i].append(vp.sphere(pos=vp.vector(k*10,20-(i*10),0),radius=2))
+            particulas_fermionicas[i].append(vp.sphere(pos=vp.vector(k*10,20-(i*10),0),radius=2,iden="fermiones:"+str(i)+","+str(k)))
     particulas_bosonicas= [
         [],
         []
     ]
     for i in range(len(particulas_bosonicas)):
         for k in range(2):
-            particulas_bosonicas[i].append(vp.sphere(pos=vp.vector(60+k*10,20-(i*10),0),radius=2,color =vp.color.red))
+            particulas_bosonicas[i].append(vp.sphere(pos=vp.vector(60+k*10,20-(i*10),0),radius=2,color =vp.color.red,iden="bosones:"+str(i)+","+str(k)))
     
 # Funcion que da avance al escenario 1     
 def escenario1_avance(ejecutando:bool, dt):    # funciona bien
