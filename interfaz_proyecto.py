@@ -65,12 +65,16 @@ def getevent():
     except:
         mover_camara(vp.vector(30, 10, 17.3205))
 
-##############
 
 
 def Ejecutar(m):
     global t
-    
+    vp.scene.userzoom = True 
+    vp.scene.userspin = True 
+    vp.scene.pan = True 
+    vp.scene.autoscale=True
+
+    vp.scene.unbind('mousedown', getevent)
     mod_esc.limpiar_escenario()
     
     # captura el evento   
@@ -92,23 +96,13 @@ def Ejecutar(m):
 
         #vp.scene.camera.pos=vp.vector(0,20,-10)
         print(vp.scene.camera.pos)
-        """
-        while True:
-            vp.rate(12000)
-            ejecutando = running
-            
-            if(running):  
-                mod_esc.escenario1_avance(ejecutando,dt)  
-                t+=dt
-            if t>10:
-                break
-        """
+
     elif(evento == "Escenario2"):
         dt = 0.001
         
         mod_esc.escenario2_creacion()
         vp.scene.caption = message[1]
-        
+        vp.scene.camera.pos=vp.vector(0, 0, 17.3205)
         while True:
             vp.rate(5000)
             
@@ -123,7 +117,7 @@ def Ejecutar(m):
         
         mod_esc.escenario3_creacion()
         vp.scene.caption = message[2]
-        
+        vp.scene.camera.pos=vp.vector(0, 0, 14)
         while True:
             vp.rate(30000)
             try:
