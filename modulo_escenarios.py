@@ -25,7 +25,7 @@ for i in datos:
     conversion[str(i[0])] = (i[1]/255, i[2]/255, i[3]/255)    
     
 ##############################################################################
-# Escenario 1: Efecto fotoelectrico
+# Escenario 1: Características de partículas
 ##############################################################################
 
 # Funcion que crea las particulas del escenario 1
@@ -80,7 +80,7 @@ def dar_mensaje_escenario1(identificador: str)->str:
     
     return mensaje
 
-#print(dar_mensaje_escenario1("bosones:0,0"))
+
 ##############################################################################
 # Escenario 2: Scattering de partículas alfa
 ##############################################################################    
@@ -147,48 +147,34 @@ def escenario2_avance(dt):
             n+=1
     t+=dt
 
-"""
-import numpy as np
-theta = [1.5387551139222004, -1.6724617793552317, -8.836827674329644,
-         60.03414324074519, 1.6409927223139116, -1.55856538913673, 
-         2.945731636791351, -1.6089658339948623, -2.331830001086867,
-         5.19311372811911, 1.5854349236843959, -2.289364383521525,
-         -3.47566482972552, -1.574919600691814, 3.4597592440368223,
-         1.6205752204885029, -1.5771257861450048, -2.0046151701832744,
-         2.1644759283159276, 1.6534729826578518, 1.554628910813631, 
-         -19.138090140942047, 1.5420664586270714, -1.6323007976718495,
-         -4.9134141054439375, 1.562874229458306, 1.9084291563587101, 
-         -1.8084729269947921, 1.5403175828939701, -1.5423236639497064,
-         1.7276450756713093, 1.578523055686462]
 
-
-secciones=np.zeros(100)
 def discretizar_angulos(theta)->np.ndarray:
+    secciones=np.zeros(100)    # arreglo con la cantidad de particulas por angulo (100 secciones que representan 180 grados)
     theta=np.abs(theta)
-    delta = 180/100           #1.8 grado ahora es 1 grado
+    delta = 180/100            #1.8 grado ahora es 1 grado
     
     for i in range(len(theta)):
         if(theta[i]<0): theta[i] = abs(theta[i])
-        
         valor =  int(theta[i]//delta)   # entero
         secciones[valor] = secciones[valor]+1
      
     return secciones    
-y = discretizar_angulos(theta)
-print("discretizar angulos: ", y)    
+
+#y = discretizar_angulos(theta)
+#print("discretizar angulos: ", y)    
  
 
 def grafica_rutherford(y):
     import matplotlib.pyplot as plt
     plt.figure()
-    print("valores de y: ",y)
+    #print("valores de y: ",y)
     ind = np.where(y>0)
     x = np.arange(100)
-    print("valores de y[ind]:",y[ind])
+    #print("valores de y[ind]:",y[ind])
     plt.scatter(x[ind],y[ind])
     
-grafica_rutherford(y)    
-"""
+#grafica_rutherford(y)    
+
 
 # Funcion que reinicia el escenario 2
 def escenario2_reiniciar():
@@ -196,7 +182,7 @@ def escenario2_reiniciar():
     escenario2_creacion()
      
 ##############################################################################
-# Escenario 3
+# Escenario 3: Scattering de Compton
 ##############################################################################    
 
 t = 0 #variables globales usadas en los metodos.

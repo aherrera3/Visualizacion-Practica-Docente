@@ -1,12 +1,12 @@
 ## Archivo con las clases que representan a cada partícula.
 
-from abc import ABC, abstractmethod
+from abc import ABC
 import vpython as vp
 #import numpy as np
 
 # constantes globales
 e=1.602e-19
-k=8.987e9*1000
+k=8.987e9*10
 
 ##############################################################################
 # Clase principal: representa un particula fundamental.
@@ -71,8 +71,8 @@ class Photon(ParticulaFundamental):
     def cambiar_velocidad(self, velocidad_nueva):
         self.velocidad = velocidad_nueva
 
-    #def cambiar_longitud_onda(self, l_nueva):
-    #    color_nuevo = vp.vector(*self.conversion[str(int(l_nueva))])
-    #    self.esfera.color = color_nuevo
-    #    self.esfera.trail_color = color_nuevo
+    def cambiar_longitud_onda(self, l_nueva):
+        color_nuevo = vp.vector(*self.conversion[str(int(l_nueva))])
+        self.esfera.color = color_nuevo
+        self.esfera.trail_color = color_nuevo
 

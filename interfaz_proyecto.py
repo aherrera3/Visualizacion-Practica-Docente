@@ -133,8 +133,9 @@ def Ejecutar(m):
             
             if(running):
                 mod_esc.escenario2_avance(dt)
-            if(mod_esc.n>30):
-                print(mod_esc.n)    
+            if(mod_esc.n==20):  
+                # se genera la grafica
+                mod_esc.grafica_rutherford(mod_esc.discretizar_angulos(mod_esc.theta))
                 break
             
     elif(evento == "Escenario3"):    
@@ -148,7 +149,7 @@ def Ejecutar(m):
             try:
                 if (running):
                     mod_esc.escenario3_avance(dt)
-                if mod_esc.n >100:
+                if mod_esc.n >30:
                     break
             except:
                 break
