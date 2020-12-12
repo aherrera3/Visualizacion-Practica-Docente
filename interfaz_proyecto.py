@@ -75,8 +75,8 @@ def getevent():
         mover_camara(vp.vector(30, 10, 17.3205))
 
 
-message = ["""\n                                                         <b>Caraterísticas de partículas fundamentales</b> 
-                                                                    Oprima una partícula. \n """,
+mensaje_adicional_inicial = "\n\n                                             "+'<img src="imagenes/tablaParticulas.png" width=500 height=500>'
+message = ["""\n                                                               <b>Caraterísticas de partículas fundamentales</b> """+mensaje_adicional_inicial,
            '''\n <b>Scattering de Partículas alpha</b>
         Otralinea ...''', '''\n Scattering de Compton ...
         Otralinea ...''']
@@ -84,11 +84,11 @@ message = ["""\n                                                         <b>Cara
 def agregar_mensaje_escenario1(identificador:str):
     global message
     if particula_enfocada==False:
+            message[0]="""\n                                                               <b>Caraterísticas de partículas fundamentales</b> """
             mensaje = mod_esc.dar_mensaje_escenario1(identificador)
             message[0]+="\n"+mensaje+"\n"
     else:
-        message[0]="""\n                                                        <b>Caraterísticas de partículas fundamentales</b> 
-                                                                    Oprima una partícula. \n """    
+        message[0]="""\n                                                               <b>Caraterísticas de partículas fundamentales</b> """+mensaje_adicional_inicial
     vp.scene.caption=message[0]   # se agrega el mensaje al escenario1    
     
 
@@ -152,6 +152,10 @@ def Ejecutar(m):
                     break
             except:
                 break
+            
+    else: # el evento == "Elige un escenario"        
+         vp.scene.caption =""
+            
 
        
 vp.wtext(pos=vp.scene.title_anchor, text="                                                                                                                                               ")
