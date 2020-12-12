@@ -75,8 +75,8 @@ def getevent():
         mover_camara(vp.vector(30, 10, 17.3205))
 
 
-mensaje_adicional_inicial = "\n\n                                             "+'<img src="imagenes/tablaParticulas.png" width=500 height=500>'
-message = ["""\n                                                               <b>Caraterísticas de partículas fundamentales</b> """+mensaje_adicional_inicial,
+mensaje_adicional_inicial = "\n                                             "+'<img src="imagenes/tablaParticulas.png" width=500 height=500>'
+message = ["""\n                                                               <b>Caraterísticas de partículas fundamentales</b>\n """+mensaje_adicional_inicial,
            '''\n <b>Scattering de Partículas alpha</b>
         Otralinea ...''', '''\n Scattering de Compton ...
         Otralinea ...''']
@@ -84,7 +84,7 @@ message = ["""\n                                                               <
 def agregar_mensaje_escenario1(identificador:str):
     global message
     if particula_enfocada==False:
-            message[0]="""\n                                                               <b>Caraterísticas de partículas fundamentales</b> """
+            message[0]="""\n                                                               <b>Caraterísticas de partículas fundamentales</b>\n """
             mensaje = mod_esc.dar_mensaje_escenario1(identificador)
             message[0]+="\n"+mensaje+"\n"
     else:

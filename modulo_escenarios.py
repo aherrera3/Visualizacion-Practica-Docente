@@ -47,12 +47,14 @@ def escenario1_creacion():
             particulas_fermionicas[i].append(vp.sphere(pos=vp.vector(k*10,20-(i*10),0),radius=2,iden="fermiones:"+str(i)+","+str(k)))
     particulas_bosonicas= [
         [],
+        [],
         []
     ]
     for i in range(len(particulas_bosonicas)):
         for k in range(2):
-            particulas_bosonicas[i].append(vp.sphere(pos=vp.vector(60+k*10,20-(i*10),0),radius=2,color =vp.color.red,iden="bosones:"+str(i)+","+str(k)))
-    
+            if i==2 and k==1: break
+            else:    particulas_bosonicas[i].append(vp.sphere(pos=vp.vector(60+k*10,20-(i*10),0),radius=2,color =vp.color.red,iden="bosones:"+str(i)+","+str(k)))
+
 # Funcion que da avance al escenario 1     
 def escenario1_avance(ejecutando:bool, dt):    # funciona bien
     global particulas
@@ -71,16 +73,15 @@ def escenario1_reiniciar():
 def dar_mensaje_escenario1(identificador: str)->str:
     mensaje=""
     if identificador=="bosones:0,0":
-        mensaje="              "+'<img src="imagenes/bosonZ.png" width=400 height=250>'+"            "+'<img src="imagenes/bosonesZyWDescubrimiento.png" width=400 height=250>'+"\n\n\n"+ "                                           "+" Mas información en: "+ '<a href="https://home.cern/science/physics/z-boson" target="_blank">The Z boson | CERN (home.cern)</a>'+"\n"
+        mensaje="              "+'<img src="imagenes/bosonZ.png" width=420 height=200>'+"            "+'<img src="imagenes/bosonesZyWDescubrimiento.png" width=400 height=250>'+"\n\n\n"+ "                                           "+" Mas información en: "+ '<a href="https://home.cern/science/physics/z-boson" target="_blank">The Z boson | CERN (home.cern)</a>'+"\n"
     elif identificador=="bosones:0,1":
-        mensaje="              "+'<img src="imagenes/bosonesW.png" width=400 height=250>'+"            "+'<img src="imagenes/bosonesZyWDescubrimiento.png" width=400 height=250>'+"\n\n\n"+ "                                           "+" Mas información en: "+ '<a href="https://home.cern/science/physics/w-boson-sunshine-and-stardust" target="_blank">W boson: Sunshine and stardust | CERN (home.cern)</a>'+"\n"
-    #elif identificador=="fermiones:0,2" 
-    
-    #elif identificador=="fermiones:0,3" 
-    
-    #elif identificador=="fermiones:0,4"     
-    
-    #elif identificador=="fermiones:1,1"
+        mensaje="              "+'<img src="imagenes/bosonesW.png" width=420 height=200>'+"            "+'<img src="imagenes/bosonesZyWDescubrimiento.png" width=400 height=250>'+"\n\n\n"+ "                                           "+" Mas información en: "+ '<a href="https://home.cern/science/physics/w-boson-sunshine-and-stardust" target="_blank">W boson: Sunshine and stardust | CERN (home.cern)</a>'+"\n"
+    elif identificador=="bosones:1,0":
+        mensaje="              "+'<img src="imagenes/bosonPhoton.png" width=420 height=200>'+"            "+'<img src="imagenes/bosonPhotonDescubrimiento.png" width=400 height=170>'+"\n\n\n"#+ "                                           "+" Mas información en: "+ '<a href="https://home.cern/science/physics/w-boson-sunshine-and-stardust" target="_blank">W boson: Sunshine and stardust | CERN (home.cern)</a>'+"\n"
+    elif identificador=="bosones:1,1": 
+        mensaje="              "+'<img src="imagenes/bosonGluon.png" width=420 height=250>'+"            "+'<img src="imagenes/bosonGluonDescubrimiento.png" width=400 height=250>'+"\n\n\n"#+ "                                           "+" Mas información en: "+ '<a href="https://home.cern/science/physics/w-boson-sunshine-and-stardust" target="_blank">W boson: Sunshine and stardust | CERN (home.cern)</a>'+"\n"
+    elif identificador=="bosones:2,0":     
+        mensaje="              "+'<img src="imagenes/bosonHiggs.png" width=420 height=250>'+"            "+'<img src="imagenes/bosonHiggsDescubrimiento.png" width=400 height=250>'+"\n\n\n"
     
     return mensaje
 
