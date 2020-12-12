@@ -7,6 +7,9 @@ import numpy as np
 
 particulas=[]
 
+s = "# particulas dispersadas vs angulo"
+rutherford = vp.graph(title=s, xtitle='angle', ytitle='# particles', fast=False, width=600)
+
 # Funcion que elimina los objetos del escenario
 def limpiar_escenario():
     for obj in vp.scene.objects:
@@ -14,8 +17,9 @@ def limpiar_escenario():
         if obj.make_trail:
             obj.clear_trail()
         del obj
-    global particulas
+    global particulas, rutherford
     particulas.clear()
+    rutherford.delete()
         
     
 # Para escenario 2 y 3
@@ -107,12 +111,7 @@ def escenario2_creacion():
     n=0
     # se crea el nucleo en el centro
     vp.sphere(pos=vp.vector(0,0,0), radius=0.5, color=color, make_trail=True, shininess=0, masa=m_nucleo, velocidad=vp.vector(0,0,0)) 
-    # arreglos para guardar las particulas alpha. Inicia con una particula
-    particulas.append([mod.Alpha(pos, vel, m_alfa, 0.5, "Alpha", conversion), True]) #booleano determina si la particula se mueve o no
-    # se añade el primer angulo
-    
-    #theta.append( 2/ vp.atan( pos.y/(k*e**2) * m_alfa*vp.mag(vel)**2 ) )
-    #print("theta0:", theta)
+    particulas.append([mod.Alpha(pos, vel, m_alfa, 0.5, "Alpha", conversion), True]) #booleano determina si la particula se mueve o no  
 
 # Funcion que da avance al escenario 2   
 def escenario2_avance(dt): 
@@ -127,10 +126,12 @@ def escenario2_avance(dt):
                 print("a ", theta)
                 particulas[i][0].velocidad = vp.vector(0, 0, 0)
                 particulas[i][1]=False
-                
             # cambia de color cuando pase por el valor en x=0 
             if(round(particulas[i][0].posicion.x, 0) == 0):
-                theta_r = 2/vp.atan(particulas[i][0].posicion.y/(k*e**2) * m_alfa*vp.mag(particulas[i][0].velocidad)**2) #usando parametro de impacto teorico para poner el color
+                try: theta_r = 2/vp.atan(particulas[i][0].posicion.y/(k*e**2) * m_alfa*vp.mag(particulas[i][0].velocidad)**2) #usando parametro de impacto teorico para poner el color
+                except:  
+                    theta_r = 0
+                    print("error por division entre cero")
                 l_nueva=theta_a_wl(theta_r*360/(2*np.pi))
                 particulas[i][0].cambiarColor(l_nueva)
                 
@@ -139,16 +140,13 @@ def escenario2_avance(dt):
             pos_y = np.random.random()-0.5     #parametro de impacto aleatorio
             pos = vp.vector(-8, pos_y, 0)
             vel = vp.vector(v,0,0)
-            particulas.append([mod.Alpha(pos, vel, m_alfa, 0.5, "Alpha", conversion),True])        
-            
-            #theta.append( 2/vp.atan( pos_y/(k*e**2) * m_alfa*vp.mag(vel)**2 ) )
-            #print("angulos actuales: ", theta) 
+            particulas.append([mod.Alpha(pos, vel, m_alfa, 0.5, "Alpha", conversion),True]) 
             t=0
             n+=1
     t+=dt
 
 
-def discretizar_angulos(theta)->np.ndarray:
+def discretizar_angulos(theta:list)->np.ndarray:
     secciones=np.zeros(100)    # arreglo con la cantidad de particulas por angulo (100 secciones que representan 180 grados)
     theta=np.abs(theta)
     delta = 180/100            #1.8 grado ahora es 1 grado
@@ -158,22 +156,17 @@ def discretizar_angulos(theta)->np.ndarray:
         valor =  int(theta[i]//delta)   # entero
         secciones[valor] = secciones[valor]+1
      
-    return secciones    
-
-#y = discretizar_angulos(theta)
-#print("discretizar angulos: ", y)    
- 
-
-def grafica_rutherford(y):
-    import matplotlib.pyplot as plt
-    plt.figure()
-    #print("valores de y: ",y)
+    return secciones  
+      
+def grafica_rutherford(y:np.ndarray):
     ind = np.where(y>0)
-    x = np.arange(100)
-    #print("valores de y[ind]:",y[ind])
-    plt.scatter(x[ind],y[ind])
-    
-#grafica_rutherford(y)    
+    y=y[ind]
+    #s = "# particulas dispersadas vs angulo"
+    #rutherford = vp.graph(title=s, xtitle='angle', ytitle='# particles', fast=False, width=600)
+    funct = vp.gdots(color=vp.color.red, size=6, label='dots')
+    for angle in range(0,len(y)):
+        vp.rate(100)
+        funct.plot(angle, y[angle])
 
 
 # Funcion que reinicia el escenario 2

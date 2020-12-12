@@ -23,11 +23,7 @@ class ParticulaFundamental(ABC):
         self.conversion=conversion
         #Se crea a esfera en VPython que representa a la particula
         self.esfera=vp.sphere(pos=posicion,radius=radio,color=vp.vector(*conversion[str(380)]), make_trail=True, shininess=0,masa=masa,velocidad=velocidad)
-            
-    def evolucion_temporal(self, dt):
-        self.posicion=vp.vector(self.posicion + self.velocidad*dt)
-        self.esfera.pos=self.posicion        
-        
+ 
     def reiniciar(self, pos_ini, vel_ini):
         self.posicion=pos_ini
         self.esfera.pos=self.posicion
@@ -67,6 +63,10 @@ class Photon(ParticulaFundamental):
         self.longitud_onda = longitud_onda
         #Se crea a esfera en VPython que representa a la particula
         self.esfera = vp.sphere(pos=posicion, color=vp.vector(*conversion[str(longitud_onda)]), opacity=(1), make_trail=True, velocidad=velocidad,radius=0.3, trail_radius=(0.05))
+        
+    def evolucion_temporal(self, dt):
+        self.posicion=vp.vector(self.posicion + self.velocidad*dt)
+        self.esfera.pos=self.posicion        
 
     def cambiar_velocidad(self, velocidad_nueva):
         self.velocidad = velocidad_nueva

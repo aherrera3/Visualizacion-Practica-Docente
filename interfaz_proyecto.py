@@ -130,10 +130,9 @@ def Ejecutar(m):
         vp.scene.camera.pos=vp.vector(0, 0, 17.3205)
         while True:
             vp.rate(5000)
-            
-            if(running):
+            if running:
                 mod_esc.escenario2_avance(dt)
-            if(mod_esc.n==20):  
+            if mod_esc.n==20:  
                 # se genera la grafica
                 mod_esc.grafica_rutherford(mod_esc.discretizar_angulos(mod_esc.theta))
                 break
@@ -147,7 +146,7 @@ def Ejecutar(m):
         while True:
             vp.rate(30000)
             try:
-                if (running):
+                if running:
                     mod_esc.escenario3_avance(dt)
                 if mod_esc.n >30:
                     break
@@ -162,7 +161,6 @@ vp.wtext(pos=vp.scene.title_anchor, text="                                      
 menu=vp.menu(choices=["Elige un escenario", "Escenario1", "Escenario2", "Escenario3"], index=0, pos=vp.scene.title_anchor, bind=Ejecutar)
 
         
-
 #vp.scene.caption = '''\n Experimentos demostrativos ...
 #otra linea ...
 #Otralinea ...'''
