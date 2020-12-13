@@ -38,6 +38,8 @@ def escenario1_creacion():
     particulas.clear()
     # creacion de objetos y añadir objetos:
     titulo = vp.text(text='Modelo Estandar',pos=vp.vector(40,29,0), align='center', color=vp.color.green,height=5)
+    titulo_leptones =vp.text(text='Leptones',pos=vp.vector(5,26,0), align='center', color=vp.color.green,height=3)
+    titulo_leptones =vp.text(text='Quarks',pos=vp.vector(24,26,0), align='center', color=vp.color.purple,height=3)
     particulas_fermionicas=[
         [],
         [],
@@ -71,7 +73,7 @@ def escenario1_creacion():
     fermion_10_nombre=vp.label(pos=particulas_fermionicas[1][0].pos-zoom_label, text='Muon', color=vp.vector(0.1,1,0.7), opacity=0.7, height=15, box=0) 
     particulas_fermionicas[1][0].color=vp.vector(0, 189, 9)/273    
 
-    fermion_20_nombre=vp.label(pos=particulas_fermionicas[2][0].pos-zoom_label, text='Muon', color=vp.vector(0.1,1,0.7), opacity=0.7, height=15, box=0) 
+    fermion_20_nombre=vp.label(pos=particulas_fermionicas[2][0].pos-zoom_label, text='Tau', color=vp.vector(0.1,1,0.7), opacity=0.7, height=15, box=0) 
     particulas_fermionicas[2][0].color=vp.vector(0, 255, 12)/273    
 
     fermion_01_nombre=vp.label(pos=particulas_fermionicas[0][1].pos-zoom_label, text='Neutrino \nElectrónico', color=vp.vector(0.1,1,0.7), opacity=0.7, height=15, box=0) 
@@ -85,6 +87,12 @@ def escenario1_creacion():
 
     fermion_02_nombre=vp.label(pos=particulas_fermionicas[0][2].pos-zoom_label, text='Down', color=vp.vector(0.1,1,0.7), opacity=0.7, height=15, box=0) 
     particulas_fermionicas[0][2].color=vp.vector(52, 0, 92)/273
+
+    fermion_12_nombre=vp.label(pos=particulas_fermionicas[1][2].pos-zoom_label, text='Strange', color=vp.vector(0.1,1,0.7), opacity=0.7, height=15, box=0) 
+    particulas_fermionicas[1][2].color=vp.vector(88, 0, 156)/273
+
+    fermion_22_nombre=vp.label(pos=particulas_fermionicas[2][2].pos-zoom_label, text='Bottom', color=vp.vector(0.1,1,0.7), opacity=0.7, height=15, box=0) 
+    particulas_fermionicas[2][2].color=vp.vector(144, 0, 255)/273
 
 
 # Funcion que da avance al escenario 1     
@@ -128,6 +136,10 @@ def dar_mensaje_escenario1(identificador: str)->str:
         mensaje="              "+'<img src="imagenes/neutrinoTauonico.png" width=420 height=237>'+"            "+'<img src="imagenes/neutrinoTauonico_descubrimiento.png" width=500 height=235>'+"\n\n\n"
     elif identificador=="fermiones:0,2":     
         mensaje="              "+'<img src="imagenes/quarkDown.png" width=420 height=237>'+"            "+'<img src="imagenes/quarkDown_descubrimiento.png" width=500 height=215>'+"\n\n\n"
+    elif identificador=="fermiones:1,2":     
+        mensaje="              "+'<img src="imagenes/strange.png" width=420 height=237>'+"            "+'<img src="imagenes/strange_descubrimiento.png" width=500 height=215>'+"\n\n\n"
+    elif identificador=="fermiones:2,2":     
+        mensaje="              "+'<img src="imagenes/bottom.png" width=420 height=237>'+"            "+'<img src="imagenes/bottom_descubrimiento.png" width=500 height=215>'+"\n\n\n"
     return mensaje
 
 ##############################################################################
