@@ -37,6 +37,7 @@ def escenario1_creacion():
     global particulas
     particulas.clear()
     # creacion de objetos y añadir objetos:
+    titulo = vp.text(text='Modelo Estandar',pos=vp.vector(40,29,0), align='center', color=vp.color.green,height=5)
     particulas_fermionicas=[
         [],
         [],
@@ -55,6 +56,23 @@ def escenario1_creacion():
             if i==2 and k==1: break
             else:    particulas_bosonicas[i].append(vp.sphere(pos=vp.vector(60+k*10,20-(i*10),0),radius=2,color =vp.color.red,iden="bosones:"+str(i)+","+str(k)))
 
+    zoom_label=vp.vector(0,0,0)
+    boson_00_nombre=vp.label(pos=particulas_bosonicas[0][0].pos-zoom_label, text='Boson Z', color=vp.vector(0.1,1,0.7), opacity=0.7, height=15, box=0) 
+    boson_01_nombre=vp.label(pos=particulas_bosonicas[0][1].pos-zoom_label, text='Bosones W', color=vp.vector(0.1,1,0.7), opacity=0.7, height=15, box=0) 
+    boson_10_nombre=vp.label(pos=particulas_bosonicas[1][0].pos-zoom_label, text='Foton', color=vp.vector(0.1,1,0.7), opacity=0.7, height=15, box=0) 
+    particulas_bosonicas[1][0].color=vp.vector(255/273, 242/273, 0)
+    particulas_bosonicas[1][0].emissive=True
+    boson_11_nombre=vp.label(pos=particulas_bosonicas[1][1].pos-zoom_label, text='Boson Gluon', color=vp.vector(0.1,1,0.7), opacity=0.7, height=15, box=0) 
+    boson_20_nombre=vp.label(pos=particulas_bosonicas[2][0].pos-zoom_label, text='Boson Higgs', color=vp.vector(0.1,1,0.7), opacity=0.7, height=15, box=0) 
+
+    fermion_00_nombre=vp.label(pos=particulas_fermionicas[0][0].pos-zoom_label, text='Electrón', color=vp.vector(0.1,1,0.7), opacity=0.7, height=15, box=0) 
+    particulas_fermionicas[0][0].color=vp.vector(0, 74, 2)/273
+
+    fermion_10_nombre=vp.label(pos=particulas_fermionicas[1][0].pos-zoom_label, text='Muon', color=vp.vector(0.1,1,0.7), opacity=0.7, height=15, box=0) 
+    particulas_fermionicas[1][0].color=vp.vector(0, 189, 9)/273    
+
+    fermion_20_nombre=vp.label(pos=particulas_fermionicas[2][0].pos-zoom_label, text='Muon', color=vp.vector(0.1,1,0.7), opacity=0.7, height=15, box=0) 
+    particulas_fermionicas[2][0].color=vp.vector(0, 255, 12)/273    
 # Funcion que da avance al escenario 1     
 def escenario1_avance(ejecutando:bool, dt):    # funciona bien
     global particulas
@@ -82,7 +100,12 @@ def dar_mensaje_escenario1(identificador: str)->str:
         mensaje="              "+'<img src="imagenes/bosonGluon.png" width=420 height=250>'+"            "+'<img src="imagenes/bosonGluonDescubrimiento.png" width=400 height=250>'+"\n\n\n"#+ "                                           "+" Mas información en: "+ '<a href="https://home.cern/science/physics/w-boson-sunshine-and-stardust" target="_blank">W boson: Sunshine and stardust | CERN (home.cern)</a>'+"\n"
     elif identificador=="bosones:2,0":     
         mensaje="              "+'<img src="imagenes/bosonHiggs.png" width=420 height=250>'+"            "+'<img src="imagenes/bosonHiggsDescubrimiento.png" width=400 height=250>'+"\n\n\n"
-    
+    elif identificador=="fermiones:0,0":     
+        mensaje="              "+'<img src="imagenes/electron.png" width=420 height=237>'+"            "+'<img src="imagenes/electron_descubrimiento.png" width=400 height=250>'+"\n\n\n"
+    elif identificador=="fermiones:1,0":     
+        mensaje="              "+'<img src="imagenes/muon.png" width=420 height=237>'+"            "+'<img src="imagenes/muon_descubrimiento.png" width=500 height=235>'+"\n\n\n"
+    elif identificador=="fermiones:2,0":     
+        mensaje="              "+'<img src="imagenes/tau.png" width=420 height=237>'+"            "+'<img src="imagenes/tau_descubrimiento.png" width=500 height=235>'+"\n\n\n"
     return mensaje
 
 

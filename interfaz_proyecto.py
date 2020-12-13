@@ -54,6 +54,8 @@ def mover_camara(posicion_nueva):
         n+=1
         if n==50:
             break
+    if particula_enfocada:
+        vp.scene.camera.pos=pos_original
     particula_enfocada= not particula_enfocada
 
 def getevent():
@@ -70,9 +72,11 @@ def getevent():
             print("id",identificador)
         agregar_mensaje_escenario1(identificador)
         mover_camara(hit.pos-zoom)
-        
+        print(vp.scene.camera.pos)
     except:
         mover_camara(vp.vector(30, 10, 17.3205))
+        vp.scene.camera.fov=60
+        print(vp.scene.camera.pos)
 
 
 mensaje_adicional_inicial = "\n                                             "+'<img src="imagenes/tablaParticulas.png" width=500 height=500>'
