@@ -81,7 +81,11 @@ def escenario1_creacion():
     particulas_fermionicas[1][1].color=vp.vector(0, 189, 9)/273    
 
     fermion_21_nombre=vp.label(pos=particulas_fermionicas[2][1].pos-zoom_label, text='Neutrino \nTauónico', color=vp.vector(0.1,1,0.7), opacity=0.7, height=15, box=0) 
-    particulas_fermionicas[2][1].color=vp.vector(0, 255, 12)/273        
+    particulas_fermionicas[2][1].color=vp.vector(0, 255, 12)/273       
+
+    fermion_02_nombre=vp.label(pos=particulas_fermionicas[0][2].pos-zoom_label, text='Down', color=vp.vector(0.1,1,0.7), opacity=0.7, height=15, box=0) 
+    particulas_fermionicas[0][2].color=vp.vector(52, 0, 92)/273
+
 
 # Funcion que da avance al escenario 1     
 def escenario1_avance(ejecutando:bool, dt):    # funciona bien
@@ -122,6 +126,8 @@ def dar_mensaje_escenario1(identificador: str)->str:
         mensaje="              "+'<img src="imagenes/neutrinoMuonico.png" width=420 height=237>'+"            "+'<img src="imagenes/neutrinoMuonico_descubrimiento.png" width=530 height=235>'+"\n\n\n"
     elif identificador=="fermiones:2,1":     
         mensaje="              "+'<img src="imagenes/neutrinoTauonico.png" width=420 height=237>'+"            "+'<img src="imagenes/neutrinoTauonico_descubrimiento.png" width=500 height=235>'+"\n\n\n"
+    elif identificador=="fermiones:0,2":     
+        mensaje="              "+'<img src="imagenes/quarkDown.png" width=420 height=237>'+"            "+'<img src="imagenes/quarkDown_descubrimiento.png" width=500 height=215>'+"\n\n\n"
     return mensaje
 
 ##############################################################################
