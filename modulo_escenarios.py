@@ -73,6 +73,16 @@ def escenario1_creacion():
 
     fermion_20_nombre=vp.label(pos=particulas_fermionicas[2][0].pos-zoom_label, text='Muon', color=vp.vector(0.1,1,0.7), opacity=0.7, height=15, box=0) 
     particulas_fermionicas[2][0].color=vp.vector(0, 255, 12)/273    
+
+    fermion_01_nombre=vp.label(pos=particulas_fermionicas[0][1].pos-zoom_label, text='Neutrino \nElectrónico', color=vp.vector(0.1,1,0.7), opacity=0.7, height=15, box=0) 
+    particulas_fermionicas[0][1].color=vp.vector(0, 74, 2)/273    
+
+    fermion_11_nombre=vp.label(pos=particulas_fermionicas[1][1].pos-zoom_label, text='Neutrino \nMuónico', color=vp.vector(0.1,1,0.7), opacity=0.7, height=15, box=0) 
+    particulas_fermionicas[1][1].color=vp.vector(0, 189, 9)/273    
+
+    fermion_21_nombre=vp.label(pos=particulas_fermionicas[2][1].pos-zoom_label, text='Neutrino \nTauónico', color=vp.vector(0.1,1,0.7), opacity=0.7, height=15, box=0) 
+    particulas_fermionicas[2][1].color=vp.vector(0, 255, 12)/273        
+
 # Funcion que da avance al escenario 1     
 def escenario1_avance(ejecutando:bool, dt):    # funciona bien
     global particulas
@@ -106,8 +116,13 @@ def dar_mensaje_escenario1(identificador: str)->str:
         mensaje="              "+'<img src="imagenes/muon.png" width=420 height=237>'+"            "+'<img src="imagenes/muon_descubrimiento.png" width=500 height=235>'+"\n\n\n"
     elif identificador=="fermiones:2,0":     
         mensaje="              "+'<img src="imagenes/tau.png" width=420 height=237>'+"            "+'<img src="imagenes/tau_descubrimiento.png" width=500 height=235>'+"\n\n\n"
+    elif identificador=="fermiones:0,1":     
+        mensaje="              "+'<img src="imagenes/neutrinoElectronico.png" width=420 height=237>'+"            "+'<img src="imagenes/neutrinoElectronico_descubrimiento.png" width=500 height=235>'+"\n\n\n"
+    elif identificador=="fermiones:1,1":     
+        mensaje="              "+'<img src="imagenes/neutrinoMuonico.png" width=420 height=237>'+"            "+'<img src="imagenes/neutrinoMuonico_descubrimiento.png" width=530 height=235>'+"\n\n\n"
+    elif identificador=="fermiones:2,1":     
+        mensaje="              "+'<img src="imagenes/neutrinoTauonico.png" width=420 height=237>'+"            "+'<img src="imagenes/neutrinoTauonico_descubrimiento.png" width=500 height=235>'+"\n\n\n"
     return mensaje
-
 
 ##############################################################################
 # Escenario 2: Scattering de partículas alfa
