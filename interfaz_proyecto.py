@@ -4,7 +4,7 @@
 import vpython as vp
 import modulo_escenarios as mod_esc
 
-vp.scene.title = "                                                                                  <b>Proyecto Practica Docente</b>\n\n"
+vp.scene.title = "                                                                     <b>Visualizacion proyecto Practica Docente</b>\n\n"
 vp.scene.background = vp.color.black
 vp.scene.width = 1000 
 vp.scene.height = 600
@@ -24,9 +24,9 @@ t = 0
 def Reset(r):
     global t
     t=0
-    if menu.selected=="Escenario1": mod_esc.escenario1_reiniciar()
-    elif menu.selected=="Escenario2": mod_esc.escenario2_reiniciar()
-    elif menu.selected=="Escenario3": mod_esc.escenario3_reiniciar()
+    if menu.selected=="Informacion": mod_esc.escenario1_reiniciar()
+    elif menu.selected=="Rutherford Scattering": mod_esc.escenario2_reiniciar()
+    elif menu.selected=="Compton Scattering": mod_esc.escenario3_reiniciar()
     Ejecutar(menu)
 
 vp.button(text="Reset", pos=vp.scene.title_anchor, bind=Reset)    
@@ -80,24 +80,23 @@ def getevent():
 
 
 mensaje_adicional_inicial = "\n                                             "+'<img src="imagenes/tablaParticulas.png" width=500 height=500>'
-message = ["""\n                                                               <b>Caraterísticas de partículas fundamentales</b>\n """+mensaje_adicional_inicial,
-           '''\n <b>Scattering de Partículas alpha</b>
-        Otralinea ...''', '''\n Scattering de Compton ...
-        Otralinea ...''']
+message = ["""\n                                                                  <b>Carateristicas de particulas fundamentales</b>\n """+mensaje_adicional_inicial,
+           '''\n                                                                      <b>Scattering de Partículas alpha</b>\n''',
+           '''\n                                                                      <b>Scattering de Compton</b>\n ''']
         
 def agregar_mensaje_escenario1(identificador:str):
     global message
     if particula_enfocada==False:
-            message[0]="""\n                                                               <b>Caraterísticas de partículas fundamentales</b>\n """
+            message[0]="""\n                                                                 <b>Carateristicas de particulas fundamentales</b>\n """
             mensaje = mod_esc.dar_mensaje_escenario1(identificador)
             message[0]+="\n"+mensaje+"\n"
     else:
-        message[0]="""\n                                                               <b>Caraterísticas de partículas fundamentales</b> """+mensaje_adicional_inicial
+        message[0]="""\n                                                                 <b>Carateristicas de particulas fundamentales</b> """+mensaje_adicional_inicial
     vp.scene.caption=message[0]   # se agrega el mensaje al escenario1    
     
 
 def Ejecutar(m):
-    global t
+    global t, message
     vp.scene.userzoom = True 
     vp.scene.userspin = True 
     vp.scene.pan = True 
@@ -109,7 +108,7 @@ def Ejecutar(m):
     # captura el evento   
     evento = m.selected    
     
-    if(evento == "Escenario1"):
+    if(evento == "Informacion"):
         # corre programa: 
         vp.scene.bind("mousedown", getevent) #define lo que sucede si se hace clik
         t = 0
@@ -126,7 +125,7 @@ def Ejecutar(m):
         #vp.scene.camera.pos=vp.vector(0,20,-10)
         print(vp.scene.camera.pos)
 
-    elif(evento == "Escenario2"):
+    elif(evento == "Rutherford Scattering"):
         dt = 0.01
         
         mod_esc.escenario2_creacion()
@@ -136,12 +135,14 @@ def Ejecutar(m):
             vp.rate(500)
             if running:
                 mod_esc.escenario2_avance(dt)
-            if mod_esc.n==20:  
+            if mod_esc.n==50:  
                 # se genera la grafica
                 mod_esc.grafica_rutherford(mod_esc.discretizar_angulos(mod_esc.theta))
+                message[1]+=" \n                            "+'<img src="imagenes/rutherfordGraph.png" width=700 height=300>\n\n'
+                vp.scene.caption = message[1]
                 break
             
-    elif(evento == "Escenario3"):    
+    elif(evento == "Compton Scattering"):    
         dt = 0.01
         
         mod_esc.escenario3_creacion()
@@ -162,11 +163,11 @@ def Ejecutar(m):
             
 
        
-vp.wtext(pos=vp.scene.title_anchor, text="                                                                                                                                               ")
+vp.wtext(pos=vp.scene.title_anchor, text="                                                                                                                                           ")
 
 # Menu de eleccion de escenarios
 #    Llama a la funcion Ejecutar(m) y ejecuta el escenario con el evento m correspondiente
-menu=vp.menu(choices=["Elige un escenario", "Escenario1", "Escenario2", "Escenario3"], index=0, pos=vp.scene.title_anchor, bind=Ejecutar)
+menu=vp.menu(choices=["Elige un escenario", "Informacion", "Rutherford Scattering", "Compton Scattering"], index=0, pos=vp.scene.title_anchor, bind=Ejecutar)
 
         
 #vp.scene.caption = '''\n Experimentos demostrativos ...

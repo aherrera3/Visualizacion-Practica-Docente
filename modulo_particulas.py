@@ -17,12 +17,11 @@ class ParticulaFundamental(ABC):
         self.posicion=posicion
         self.velocidad=velocidad
         self.etiqueta=vp.label(pos=posicion, text=nombre, color=vp.vector(0.1,1,0.7), opacity=0.7, height=15, box=0) 
-        #self.color=color
         self.masa=masa
         self.radio=radio
         self.conversion=conversion
         #Se crea a esfera en VPython que representa a la particula
-        self.esfera=vp.sphere(pos=posicion,radius=radio,color=vp.vector(*conversion[str(380)]), make_trail=True, shininess=0,masa=masa,velocidad=velocidad)
+        self.esfera=vp.sphere(pos=posicion,radius=radio,color=vp.vector(*conversion[str(380)]), make_trail=True, shininess=0,masa=masa,velocidad=velocidad, trail_radius=(0.02))
  
     def reiniciar(self, pos_ini, vel_ini):
         self.posicion=pos_ini
@@ -32,7 +31,7 @@ class ParticulaFundamental(ABC):
         if self.esfera.make_trail:
             self.esfera.clear_trail()
             
-    def cambiarColor(self, l_nueva):
+    def cambiar_longitud_onda(self, l_nueva):
         color_nuevo = vp.vector(*self.conversion[str(int(l_nueva))])
         self.esfera.color = color_nuevo
         self.esfera.trail_color = color_nuevo        
@@ -54,7 +53,7 @@ class Alpha(ParticulaFundamental):
         self.velocidad = vp.vector(self.velocidad.x, self.velocidad.y, 0)
         self.esfera.velocidad=self.velocidad      
         
-
+# Clase que representa a un foton y hereda de ParticulaFundamental       
 class Photon(ParticulaFundamental):
     def __init__(self, velocidad, posicion, longitud_onda, conversion:dict):
         self.conversion = conversion
