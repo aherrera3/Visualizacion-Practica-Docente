@@ -161,18 +161,11 @@ def Ejecutar(m):
     else: # el evento == "Elige un escenario"        
          vp.scene.caption =""
             
-
-       
+         
 vp.wtext(pos=vp.scene.title_anchor, text="                                                                                                                                           ")
 
-# Menu de eleccion de escenarios
-#    Llama a la funcion Ejecutar(m) y ejecuta el escenario con el evento m correspondiente
+# Menu de eleccion de escenarios:  llama a la funcion Ejecutar(m) y ejecuta el escenario con el evento m correspondiente
 menu=vp.menu(choices=["Elige un escenario", "Informacion", "Rutherford Scattering", "Compton Scattering"], index=0, pos=vp.scene.title_anchor, bind=Ejecutar)
-
-        
-#vp.scene.caption = '''\n Experimentos demostrativos ...
-#otra linea ...
-#Otralinea ...'''
 
 vp.scene.append_to_caption('                     ')
 vp.scene.append_to_caption('\n')

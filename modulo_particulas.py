@@ -70,8 +70,3 @@ class Photon(ParticulaFundamental):
     def cambiar_velocidad(self, velocidad_nueva):
         self.velocidad = velocidad_nueva
 
-    def cambiar_longitud_onda(self, l_nueva):
-        color_nuevo = vp.vector(*self.conversion[str(int(l_nueva))])
-        self.esfera.color = color_nuevo
-        self.esfera.trail_color = color_nuevo
-
