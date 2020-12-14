@@ -38,8 +38,10 @@ def escenario1_creacion():
     particulas.clear()
     # creacion de objetos y añadir objetos:
     titulo = vp.text(text='Modelo Estandar',pos=vp.vector(40,29,0), align='center', color=vp.color.green,height=5)
-    titulo_leptones =vp.text(text='Leptones',pos=vp.vector(5,26,0), align='center', color=vp.color.green,height=3)
-    titulo_leptones =vp.text(text='Quarks',pos=vp.vector(24,26,0), align='center', color=vp.color.purple,height=3)
+    titulo_leptones =vp.text(text='Leptones',pos=vp.vector(5,25,0), align='center', color=vp.color.green,height=3)
+    titulo_leptones =vp.text(text='Quarks',pos=vp.vector(24,25,0), align='center', color=vp.color.purple,height=3)
+    titulo_bosones =vp.text(text='Bosones',pos=vp.vector(64,25,0), align='center', color=vp.color.blue,height=3)
+
     particulas_fermionicas=[
         [],
         [],
@@ -59,18 +61,18 @@ def escenario1_creacion():
             else:    particulas_bosonicas[i].append(vp.sphere(pos=vp.vector(60+k*10,20-(i*10),0),radius=2,color =vp.color.red,iden="bosones:"+str(i)+","+str(k)))
 
     zoom_label=vp.vector(0,0,0)
-    boson_00_nombre=vp.label(pos=particulas_bosonicas[0][0].pos-zoom_label, text='Boson Z', color=vp.vector(0.1,1,0.7), opacity=0.7, height=15, box=0) 
+    boson_00_nombre=vp.label(pos=particulas_bosonicas[0][0].pos-zoom_label, text='Z', color=vp.vector(0.1,1,0.7), opacity=0.7, height=15, box=0) 
     boson_01_nombre=vp.label(pos=particulas_bosonicas[0][1].pos-zoom_label, text='Bosones W', color=vp.vector(0.1,1,0.7), opacity=0.7, height=15, box=0) 
-    boson_10_nombre=vp.label(pos=particulas_bosonicas[1][0].pos-zoom_label, text='Foton', color=vp.vector(0.1,1,0.7), opacity=0.7, height=15, box=0) 
+    boson_10_nombre=vp.label(pos=particulas_bosonicas[1][0].pos-zoom_label, text='Fotón', color=vp.vector(0.1,1,0.7), opacity=0.7, height=15, box=0) 
     particulas_bosonicas[1][0].color=vp.vector(255/273, 242/273, 0)
     particulas_bosonicas[1][0].emissive=True
-    boson_11_nombre=vp.label(pos=particulas_bosonicas[1][1].pos-zoom_label, text='Boson Gluon', color=vp.vector(0.1,1,0.7), opacity=0.7, height=15, box=0) 
-    boson_20_nombre=vp.label(pos=particulas_bosonicas[2][0].pos-zoom_label, text='Boson Higgs', color=vp.vector(0.1,1,0.7), opacity=0.7, height=15, box=0) 
+    boson_11_nombre=vp.label(pos=particulas_bosonicas[1][1].pos-zoom_label, text='Gluón', color=vp.vector(0.1,1,0.7), opacity=0.7, height=15, box=0) 
+    boson_20_nombre=vp.label(pos=particulas_bosonicas[2][0].pos-zoom_label, text='Higgs', color=vp.vector(0.1,1,0.7), opacity=0.7, height=15, box=0) 
 
     fermion_00_nombre=vp.label(pos=particulas_fermionicas[0][0].pos-zoom_label, text='Electrón', color=vp.vector(0.1,1,0.7), opacity=0.7, height=15, box=0) 
     particulas_fermionicas[0][0].color=vp.vector(0, 74, 2)/273
 
-    fermion_10_nombre=vp.label(pos=particulas_fermionicas[1][0].pos-zoom_label, text='Muon', color=vp.vector(0.1,1,0.7), opacity=0.7, height=15, box=0) 
+    fermion_10_nombre=vp.label(pos=particulas_fermionicas[1][0].pos-zoom_label, text='Muón', color=vp.vector(0.1,1,0.7), opacity=0.7, height=15, box=0) 
     particulas_fermionicas[1][0].color=vp.vector(0, 189, 9)/273    
 
     fermion_20_nombre=vp.label(pos=particulas_fermionicas[2][0].pos-zoom_label, text='Tau', color=vp.vector(0.1,1,0.7), opacity=0.7, height=15, box=0) 
@@ -93,7 +95,16 @@ def escenario1_creacion():
 
     fermion_22_nombre=vp.label(pos=particulas_fermionicas[2][2].pos-zoom_label, text='Bottom', color=vp.vector(0.1,1,0.7), opacity=0.7, height=15, box=0) 
     particulas_fermionicas[2][2].color=vp.vector(144, 0, 255)/273
+    
+    vp.label(pos=particulas_fermionicas[0][3].pos-zoom_label, text='Up', color=vp.vector(0.1,1,0.7), opacity=0.7, height=15, box=0) 
+    particulas_fermionicas[0][3].color=vp.vector(52, 0, 92)/273
 
+    vp.label(pos=particulas_fermionicas[1][3].pos-zoom_label, text='Charm', color=vp.vector(0.1,1,0.7), opacity=0.7, height=15, box=0) 
+    particulas_fermionicas[1][3].color=vp.vector(88, 0, 156)/273
+
+    vp.label(pos=particulas_fermionicas[2][3].pos-zoom_label, text='Top', color=vp.vector(0.1,1,0.7), opacity=0.7, height=15, box=0) 
+    particulas_fermionicas[2][3].color=vp.vector(144, 0, 255)/273
+    
 
 # Funcion que da avance al escenario 1     
 def escenario1_avance(ejecutando:bool, dt):    # funciona bien
@@ -117,11 +128,11 @@ def dar_mensaje_escenario1(identificador: str)->str:
     elif identificador=="bosones:0,1":
         mensaje="              "+'<img src="imagenes/bosonesW.png" width=420 height=200>'+"            "+'<img src="imagenes/bosonesZyWDescubrimiento.png" width=400 height=250>'+"\n\n\n"+ "                                           "+" Mas información en: "+ '<a href="https://home.cern/science/physics/w-boson-sunshine-and-stardust" target="_blank">W boson: Sunshine and stardust | CERN (home.cern)</a>'+"\n"
     elif identificador=="bosones:1,0":
-        mensaje="              "+'<img src="imagenes/bosonPhoton.png" width=420 height=200>'+"            "+'<img src="imagenes/bosonPhotonDescubrimiento.png" width=400 height=170>'+"\n\n\n"#+ "                                           "+" Mas información en: "+ '<a href="https://home.cern/science/physics/w-boson-sunshine-and-stardust" target="_blank">W boson: Sunshine and stardust | CERN (home.cern)</a>'+"\n"
+        mensaje="              "+'<img src="imagenes/bosonPhoton.png" width=420 height=200>'+"            "+'<img src="imagenes/bosonPhotonDescubrimiento.png" width=400 height=170>'+"\n\n\n"
     elif identificador=="bosones:1,1": 
-        mensaje="              "+'<img src="imagenes/bosonGluon.png" width=420 height=250>'+"            "+'<img src="imagenes/bosonGluonDescubrimiento.png" width=400 height=250>'+"\n\n\n"#+ "                                           "+" Mas información en: "+ '<a href="https://home.cern/science/physics/w-boson-sunshine-and-stardust" target="_blank">W boson: Sunshine and stardust | CERN (home.cern)</a>'+"\n"
+        mensaje="              "+'<img src="imagenes/bosonGluon.png" width=420 height=250>'+"            "+'<img src="imagenes/bosonGluonDescubrimiento.png" width=400 height=250>'+"\n\n\n"
     elif identificador=="bosones:2,0":     
-        mensaje="              "+'<img src="imagenes/bosonHiggs.png" width=420 height=250>'+"            "+'<img src="imagenes/bosonHiggsDescubrimiento.png" width=400 height=250>'+"\n\n\n"
+        mensaje="              "+'<img src="imagenes/bosonHiggs.png" width=420 height=250>'+"            "+'<img src="imagenes/bosonHiggsDescubrimiento.png" width=400 height=250>'+"\n\n\n"+ "                                           "+" Mas información en: "+ '<a href="https://www.youtube.com/watch?v=joTKd5j3mzk&ab_channel=TED-Ed" target="_blank">The Higgs Field, explained - Don Lincoln - YouTube</a>'+"\n"
     elif identificador=="fermiones:0,0":     
         mensaje="              "+'<img src="imagenes/electron.png" width=420 height=237>'+"            "+'<img src="imagenes/electron_descubrimiento.png" width=400 height=250>'+"\n\n\n"
     elif identificador=="fermiones:1,0":     
@@ -135,11 +146,17 @@ def dar_mensaje_escenario1(identificador: str)->str:
     elif identificador=="fermiones:2,1":     
         mensaje="              "+'<img src="imagenes/neutrinoTauonico.png" width=420 height=237>'+"            "+'<img src="imagenes/neutrinoTauonico_descubrimiento.png" width=500 height=235>'+"\n\n\n"
     elif identificador=="fermiones:0,2":     
-        mensaje="              "+'<img src="imagenes/quarkDown.png" width=420 height=237>'+"            "+'<img src="imagenes/quarkDown_descubrimiento.png" width=500 height=215>'+"\n\n\n"
+        mensaje="              "+'<img src="imagenes/quarkDown.png" width=420 height=237>'+"            "+'<img src="imagenes/quarkDown_descubrimiento.png" width=500 height=215>'+"\n\n\n"+ "                                           "+" Mas información en: "+ '<a href="https://www.youtube.com/watch?v=LraNu_78sCw&ab_channel=PhysicsGirl" target="_blank">Quarks Explained in Four Minutes - YouTube</a>'+"\n"
     elif identificador=="fermiones:1,2":     
         mensaje="              "+'<img src="imagenes/strange.png" width=420 height=237>'+"            "+'<img src="imagenes/strange_descubrimiento.png" width=500 height=215>'+"\n\n\n"
     elif identificador=="fermiones:2,2":     
         mensaje="              "+'<img src="imagenes/bottom.png" width=420 height=237>'+"            "+'<img src="imagenes/bottom_descubrimiento.png" width=500 height=215>'+"\n\n\n"
+    elif identificador=="fermiones:0,3":     
+        mensaje="              "+'<img src="imagenes/quarkUp.png" width=390 height=200>'+"            "+'<img src="imagenes/quarkUpDescubrimiento.png" width=400 height=230>'+"\n\n\n"
+    elif identificador=="fermiones:1,3":     
+        mensaje="              "+'<img src="imagenes/quarkCharm.png" width=420 height=237>'+"            "+'<img src="imagenes/quarkCharmDescubrimiento.png" width=400 height=230>'+"\n\n\n"
+    elif identificador=="fermiones:2,3":     
+        mensaje="              "+'<img src="imagenes/quarkTop.png" width=400 height=200>'+"            "+'<img src="imagenes/quarkTopDescubrimiento.png" width=400 height=230>'+"\n\n\n"+ "                                           "+" Mas información en: "+ '<a href="https://www.youtube.com/watch?v=lxWR16c9Kf0&ab_channel=Fermilab" target="_blank">Introducing the top quark – YouTube</a>'+"\n"
     return mensaje
 
 ##############################################################################
