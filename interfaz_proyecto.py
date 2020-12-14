@@ -82,7 +82,7 @@ def getevent():
 mensaje_adicional_inicial = "\n                                             "+'<img src="imagenes/tablaParticulas.png" width=500 height=500>'
 message = ["""\n                                                                  <b>Carateristicas de particulas fundamentales</b>\n """+mensaje_adicional_inicial,
            '''\n                                                                      <b>Scattering de Partículas alpha</b>\n''',
-           '''\n                                                                      <b>Scattering de Compton</b>\n ''']
+           '''\n                                                                      <b>Scattering de Compton</b>\n\n ''']
         
 def agregar_mensaje_escenario1(identificador:str):
     global message
@@ -111,8 +111,6 @@ def Ejecutar(m):
     if(evento == "Informacion"):
         # corre programa: 
         vp.scene.bind("mousedown", getevent) #define lo que sucede si se hace clik
-        t = 0
-        dt = 0.001
         vp.scene.userzoom = False # no puede hacer zoom
         vp.scene.userspin = False # no puede girar la escena
         vp.scene.pan = False #no puede mover la escena 
@@ -135,10 +133,17 @@ def Ejecutar(m):
             vp.rate(500)
             if running:
                 mod_esc.escenario2_avance(dt)
-            if mod_esc.n==50:  
+            if mod_esc.n==20:  
                 # se genera la grafica
                 mod_esc.grafica_rutherford(mod_esc.discretizar_angulos(mod_esc.theta))
-                message[1]+=" \n                            "+'<img src="imagenes/rutherfordGraph.png" width=700 height=300>\n\n'
+                message[1]+="""\n            El scattering de Rutherford, hace referencia al efecto que un numero de particulas alfa presenta al incidir en un nucleo atomico.
+                    Al incidirlo, el núcleo permanece aproximadamente inmovil, y la particula alfa se dispersa con cierto angulo de dispersion,
+                    que depende del parametro de impacto. Este scattering, es debido a la fuerza de interaccion electromagnetica 
+                    de repulsion entre nucleo y particula alfa, al ambas tener carga positiva. Teoricamente, se espera obetener 
+                    una grafica como la que se muestra a continuacion. A la izquierda, se evidencia que la gran mayoria de 
+              particulas se dispersan a angulos bajos o no se dispersan, y a la derecha se muestra una imagen ilustrativa de esto.\n 
+                       <img src="imagenes/rutherfordScattering.png" width=700 height=300>\n>
+                             """+" \n                        "+'<img src="imagenes/rutherfordGraph.png" width=700 height=300>\n\n'
                 vp.scene.caption = message[1]
                 break
             
@@ -153,20 +158,30 @@ def Ejecutar(m):
             try:
                 if running:
                     mod_esc.escenario3_avance(dt)
-                if mod_esc.n >50:
+                if mod_esc.n==20:
+                    message[2]+="""                    El scattering de Compton, hace referencia al efecto que un foton presenta al incidir a un electron en reposo. \n                  Al incidirlo, el electron se deflecta y el foton se dispersa con un angulo que se conoce como angulo de dispersion.\n
+                                           <img src="imagenes/comptonDiagram.png" width=500 height=300>\n
+                        El foton al ser dispersado, cambia su longitud de onda, siguiendo la formula de Rutheford:\n\n"""+'                                                         <img src="imagenes/comptonEquation.png" width=200 height=60>\n  >'
+                    vp.scene.caption = message[2]
                     break
             except:
                 break
             
     else: # el evento == "Elige un escenario"        
-         vp.scene.caption =""
+         vp.scene.caption=mensajeInicio
             
-         
+mensajeInicio="""\n Diferentes escenarios creados con el fin de visualizar informacion acerca de las particulas del modelo estandar, para visualizar los efectos \n de scattering de particulas alpha incidiendo un nucleo (scattering de Rutherford) y por ultimo, para visualizar el scattering de un foton
+                                                incidiendo en un electron en resposo (scattering de Compton). \n\n\n\n                               Para el escenario de Rutherford y Compton scattering, se usaron algunas graficas tomadas de los siguientes libros:
+                                                                              Serway, R., Moyer, C., & Moses, C. (2005). Modern physics (3rd ed., pp. 90,92). 
+                                                                                       Tipler, P., & Llewellyn, R. (2020). Modern Physics (6th ed., pp. 159,162)."""         
+
 vp.wtext(pos=vp.scene.title_anchor, text="                                                                                                                                           ")
 
 # Menu de eleccion de escenarios:  llama a la funcion Ejecutar(m) y ejecuta el escenario con el evento m correspondiente
 menu=vp.menu(choices=["Elige un escenario", "Informacion", "Rutherford Scattering", "Compton Scattering"], index=0, pos=vp.scene.title_anchor, bind=Ejecutar)
 
 vp.scene.append_to_caption('                     ')
+vp.scene.append_to_caption(mensajeInicio)
+
 vp.scene.append_to_caption('\n')
 

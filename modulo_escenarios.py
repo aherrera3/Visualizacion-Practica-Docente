@@ -192,7 +192,7 @@ def escenario2_avance(dt):
             # detiene el mov de la particula si pos en magnitud es > 10:
             if(vp.mag(particulas[i][0].posicion)>10 and particulas[i][1]):
                 theta.append(vp.atan(particulas[i][0].posicion.y/particulas[i][0].posicion.x)*360/(2*np.pi))
-                print("a ", theta)
+                # print("a ", theta)  # para imprimir los valores de los angulos
                 particulas[i][0].velocidad = vp.vector(0, 0, 0)
                 particulas[i][1]=False
             # cambia de color cuando pase por el valor en x=0 
