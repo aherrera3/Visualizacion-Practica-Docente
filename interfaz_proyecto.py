@@ -127,13 +127,13 @@ def Ejecutar(m):
         print(vp.scene.camera.pos)
 
     elif(evento == "Escenario2"):
-        dt = 0.001
+        dt = 0.01
         
         mod_esc.escenario2_creacion()
         vp.scene.caption = message[1]
         vp.scene.camera.pos=vp.vector(0, 0, 17.3205)
         while True:
-            vp.rate(5000)
+            vp.rate(500)
             if running:
                 mod_esc.escenario2_avance(dt)
             if mod_esc.n==20:  
@@ -142,17 +142,17 @@ def Ejecutar(m):
                 break
             
     elif(evento == "Escenario3"):    
-        dt = 0.0001
+        dt = 0.01
         
         mod_esc.escenario3_creacion()
         vp.scene.caption = message[2]
         vp.scene.camera.pos=vp.vector(0, 0, 14)
         while True:
-            vp.rate(30000)
+            vp.rate(500)
             try:
                 if running:
                     mod_esc.escenario3_avance(dt)
-                if mod_esc.n >30:
+                if mod_esc.n >50:
                     break
             except:
                 break

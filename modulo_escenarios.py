@@ -39,8 +39,8 @@ def escenario1_creacion():
     # creacion de objetos y añadir objetos:
     titulo = vp.text(text='Modelo Estandar',pos=vp.vector(40,29,0), align='center', color=vp.color.green,height=5)
     titulo_leptones =vp.text(text='Leptones',pos=vp.vector(5,25,0), align='center', color=vp.color.green,height=3)
-    titulo_leptones =vp.text(text='Quarks',pos=vp.vector(24,25,0), align='center', color=vp.color.purple,height=3)
-    titulo_bosones =vp.text(text='Bosones',pos=vp.vector(64,25,0), align='center', color=vp.color.blue,height=3)
+    titulo_quarks =vp.text(text='Quarks',pos=vp.vector(25,25,0), align='center', color=vp.color.purple,height=3)
+    titulo_bosones =vp.text(text='Bosones',pos=vp.vector(65,25,0), align='center', color=vp.color.blue,height=3)
 
     particulas_fermionicas=[
         [],
@@ -49,7 +49,7 @@ def escenario1_creacion():
     ]
     for i in range(len(particulas_fermionicas)):
         for k in range(4):
-            particulas_fermionicas[i].append(vp.sphere(pos=vp.vector(k*10,20-(i*10),0),radius=2,iden="fermiones:"+str(i)+","+str(k)))
+            particulas_fermionicas[i].append(vp.sphere(pos=vp.vector(k*10,20-(i*10),0),radius=4-i,iden="fermiones:"+str(i)+","+str(k)))
     particulas_bosonicas= [
         [],
         [],
@@ -136,25 +136,25 @@ def dar_mensaje_escenario1(identificador: str)->str:
     elif identificador=="fermiones:0,0":     
         mensaje="              "+'<img src="imagenes/electron.png" width=420 height=237>'+"            "+'<img src="imagenes/electron_descubrimiento.png" width=400 height=250>'+"\n\n\n"
     elif identificador=="fermiones:1,0":     
-        mensaje="              "+'<img src="imagenes/muon.png" width=420 height=237>'+"            "+'<img src="imagenes/muon_descubrimiento.png" width=500 height=235>'+"\n\n\n"
+        mensaje="              "+'<img src="imagenes/muon.png" width=420 height=237>'+"            "+'<img src="imagenes/muon_descubrimiento.png" width=500 height=205>'+"\n\n\n"
     elif identificador=="fermiones:2,0":     
-        mensaje="              "+'<img src="imagenes/tau.png" width=420 height=237>'+"            "+'<img src="imagenes/tau_descubrimiento.png" width=500 height=235>'+"\n\n\n"
+        mensaje="              "+'<img src="imagenes/tau.png" width=420 height=237>'+"            "+'<img src="imagenes/tau_descubrimiento.png" width=500 height=215>'+"\n\n\n"
     elif identificador=="fermiones:0,1":     
-        mensaje="              "+'<img src="imagenes/neutrinoElectronico.png" width=420 height=237>'+"            "+'<img src="imagenes/neutrinoElectronico_descubrimiento.png" width=500 height=235>'+"\n\n\n"
+        mensaje="              "+'<img src="imagenes/neutrinoElectronico.png" width=420 height=237>'+"            "+'<img src="imagenes/neutrinoElectronico_descubrimiento.png" width=480 height=235>'+"\n\n\n"
     elif identificador=="fermiones:1,1":     
-        mensaje="              "+'<img src="imagenes/neutrinoMuonico.png" width=420 height=237>'+"            "+'<img src="imagenes/neutrinoMuonico_descubrimiento.png" width=530 height=235>'+"\n\n\n"
+        mensaje="              "+'<img src="imagenes/neutrinoMuonico.png" width=420 height=237>'+"            "+'<img src="imagenes/neutrinoMuonico_descubrimiento.png" width=530 height=220>'+"\n\n\n"
     elif identificador=="fermiones:2,1":     
         mensaje="              "+'<img src="imagenes/neutrinoTauonico.png" width=420 height=237>'+"            "+'<img src="imagenes/neutrinoTauonico_descubrimiento.png" width=500 height=235>'+"\n\n\n"
     elif identificador=="fermiones:0,2":     
-        mensaje="              "+'<img src="imagenes/quarkDown.png" width=420 height=237>'+"            "+'<img src="imagenes/quarkDown_descubrimiento.png" width=500 height=215>'+"\n\n\n"+ "                                           "+" Mas información en: "+ '<a href="https://www.youtube.com/watch?v=LraNu_78sCw&ab_channel=PhysicsGirl" target="_blank">Quarks Explained in Four Minutes - YouTube</a>'+"\n"
+        mensaje="              "+'<img src="imagenes/down.png" width=420 height=220>'+"            "+'<img src="imagenes/quarkDown_descubrimiento.png" width=500 height=206>'+"\n\n\n"+ "                                           "+" Mas información en: "+ '<a href="https://www.youtube.com/watch?v=LraNu_78sCw&ab_channel=PhysicsGirl" target="_blank">Quarks Explained in Four Minutes - YouTube</a>'+"\n"
     elif identificador=="fermiones:1,2":     
-        mensaje="              "+'<img src="imagenes/strange.png" width=420 height=237>'+"            "+'<img src="imagenes/strange_descubrimiento.png" width=500 height=215>'+"\n\n\n"
+        mensaje="              "+'<img src="imagenes/strange.png" width=420 height=237>'+"            "+'<img src="imagenes/strange_descubrimiento.png" width=500 height=209>'+"\n\n\n"
     elif identificador=="fermiones:2,2":     
         mensaje="              "+'<img src="imagenes/bottom.png" width=420 height=237>'+"            "+'<img src="imagenes/bottom_descubrimiento.png" width=500 height=215>'+"\n\n\n"
     elif identificador=="fermiones:0,3":     
         mensaje="              "+'<img src="imagenes/quarkUp.png" width=390 height=200>'+"            "+'<img src="imagenes/quarkUpDescubrimiento.png" width=400 height=230>'+"\n\n\n"
     elif identificador=="fermiones:1,3":     
-        mensaje="              "+'<img src="imagenes/quarkCharm.png" width=420 height=237>'+"            "+'<img src="imagenes/quarkCharmDescubrimiento.png" width=400 height=230>'+"\n\n\n"
+        mensaje="              "+'<img src="imagenes/quarkCharm.png" width=420 height=215>'+"            "+'<img src="imagenes/quarkCharmDescubrimiento.png" width=400 height=230>'+"\n\n\n"
     elif identificador=="fermiones:2,3":     
         mensaje="              "+'<img src="imagenes/quarkTop.png" width=400 height=200>'+"            "+'<img src="imagenes/quarkTopDescubrimiento.png" width=400 height=230>'+"\n\n\n"+ "                                           "+" Mas información en: "+ '<a href="https://www.youtube.com/watch?v=lxWR16c9Kf0&ab_channel=Fermilab" target="_blank">Introducing the top quark – YouTube</a>'+"\n"
     return mensaje
@@ -264,7 +264,7 @@ def escenario3_creacion():
     n=0
     # Creacion de objetos:
     #Se asigna un booleano para saber si la particula se encuentra antes del choque (True) o despues del choque (False)
-    particulas.append([ mod.Photon(vp.vector(4, 0, 0), vp.vector(0, 0, 0), 380, conversion), True ])
+    particulas.append([ mod.Photon(vp.vector(8, 0, 0), vp.vector(0, 0, 0), 380, conversion), True ])
 
 def theta_a_wl(theta:float)->float:
     return round(380+(199*(1-np.cos(theta))), 0)
